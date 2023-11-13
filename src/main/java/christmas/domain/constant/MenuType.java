@@ -3,7 +3,7 @@ package christmas.domain.constant;
 import christmas.exception.IllegalArgumentExceptionType;
 import java.util.stream.Stream;
 
-public enum Menu {
+public enum MenuType {
     WHITE_MUSHROOM_SOUP("양송이수프", 6_000, MenuCategory.APPETIZER),
     TAPAS("타파스", 5_500, MenuCategory.APPETIZER),
     CAESAR_SALAD("시저샐러드", 8_000, MenuCategory.APPETIZER),
@@ -21,7 +21,7 @@ public enum Menu {
     private final int price;
     private final MenuCategory category;
 
-    Menu(String name, int price, MenuCategory category) {
+    MenuType(String name, int price, MenuCategory category) {
         this.name = name;
         this.price = price;
         this.category = category;
@@ -39,8 +39,7 @@ public enum Menu {
         return category;
     }
 
-
-    public static Menu getByMenuName(String name) {
+    public static MenuType getByMenuName(String name) {
         return Stream.of(values())
                 .filter(menu -> name.equals(menu.name))
                 .findAny()

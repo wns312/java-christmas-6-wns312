@@ -1,7 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.domain.dto.OrderMenuDto;
+import christmas.domain.dto.MenuDto;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    private OrderMenuDto convertOrderMenu(String inputMenu) {
+    private MenuDto convertOrderMenu(String inputMenu) {
         List<String> menuInfo = Arrays.stream(inputMenu.split(MENU_COUNT_DELIMITER))
                 .map(String::trim)
                 .toList();
@@ -36,10 +36,10 @@ public class InputView {
         String name = menuInfo.get(0);
         String rawCount = menuInfo.get(1);
 
-        return new OrderMenuDto(name, parseMenuCount(rawCount));
+        return new MenuDto(name, parseMenuCount(rawCount));
     }
 
-    private List<OrderMenuDto> convertOrderMenus(String input) {
+    private List<MenuDto> convertOrderMenus(String input) {
         List<String> menus = Arrays.stream(input.split(MENUS_DELIMITER)).toList();
 
         return menus.stream()
@@ -48,7 +48,7 @@ public class InputView {
                 .toList();
     }
 
-    public List<OrderMenuDto> readOrderMenus() {
+    public List<MenuDto> readOrderMenus() {
         System.out.println(ASKING_ORDER_MENUS_MESSAGE);
         String input = Console.readLine();
 

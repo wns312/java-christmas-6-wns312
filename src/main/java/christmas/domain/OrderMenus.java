@@ -5,19 +5,19 @@ import java.util.Collections;
 import java.util.List;
 
 public class OrderMenus {
-    private final List<OrderMenu> elements;
+    private final List<Menu> elements;
 
-    public OrderMenus(List<OrderMenu> elements) {
+    public OrderMenus(List<Menu> elements) {
         OrderMenusValidation.validate(elements);
         this.elements = elements;
     }
 
-    public List<OrderMenu> getElements() {
+    public List<Menu> getElements() {
         return Collections.unmodifiableList(elements);
     }
 
     public int getTotalPayment() {
-        return elements.stream().mapToInt(OrderMenu::getTotalPayment).sum();
+        return elements.stream().mapToInt(Menu::getTotalPayment).sum();
     }
 
 }

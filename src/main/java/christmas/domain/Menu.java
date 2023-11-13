@@ -1,25 +1,25 @@
 package christmas.domain;
 
-import christmas.domain.constant.Menu;
+import christmas.domain.constant.MenuType;
 import christmas.domain.constant.MenuCategory;
 import christmas.exception.IllegalArgumentExceptionType;
 
-public class OrderMenu {
+public class Menu {
     private static final int MIN_MENU_COUNT = 1;
     private static final int MAX_MENU_COUNT = 20;
 
-    private final Menu menu;
+    private final MenuType menuType;
     private final int count;
 
-    public OrderMenu(Menu menu, int count) {
+    public Menu(MenuType menuType, int count) {
         validateMinCount(count);
         validateMaxCount(count);
-        this.menu = menu;
+        this.menuType = menuType;
         this.count = count;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public MenuType getMenu() {
+        return menuType;
     }
 
     public int getCount() { return count; }
@@ -35,20 +35,15 @@ public class OrderMenu {
         }
     }
 
-    public String getMenuName() {
-        return menu.getName();
-    }
-
     public int getTotalPayment() {
-        return menu.getPrice() * count;
+        return menuType.getPrice() * count;
     }
 
     public boolean isCategoryOf(MenuCategory menuCategory) {
-        return menuCategory == menu.getCategory();
+        return menuCategory == menuType.getCategory();
     }
 
     public boolean isNotCategoryOf(MenuCategory menuCategory) {
         return !isCategoryOf(menuCategory);
     }
-
 }

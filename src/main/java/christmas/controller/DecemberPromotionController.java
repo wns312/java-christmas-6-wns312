@@ -1,10 +1,10 @@
 package christmas.controller;
 
-import christmas.domain.OrderMenu;
+import christmas.domain.Menu;
 import christmas.domain.OrderMenus;
 import christmas.domain.VisitDate;
-import christmas.domain.dto.OrderMenuDto;
-import christmas.domain.mapper.OrderMenuMapper;
+import christmas.domain.dto.MenuDto;
+import christmas.domain.mapper.MenuMapper;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;
@@ -35,8 +35,10 @@ public class DecemberPromotionController {
         return repeatToReadBeforeSuccess(() -> {
             List<OrderMenuDto> orderMenusData = inputView.readOrderMenus();
             List<OrderMenu> orderMenus = orderMenusData.stream().map(OrderMenuMapper::toDomain).toList();
+            List<MenuDto> orderMenusData = inputView.readOrderMenus();
+            List<Menu> menus = orderMenusData.stream().map(MenuMapper::toDomain).toList();
 
-            return new OrderMenus(orderMenus);
+            return new OrderMenus(menus);
         });
     }
 
