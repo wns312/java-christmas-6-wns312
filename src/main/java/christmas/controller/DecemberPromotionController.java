@@ -1,9 +1,19 @@
 package christmas.controller;
 
+import christmas.domain.DiscountManager;
+import christmas.domain.EventBenefit;
+import christmas.domain.EventBenefits;
 import christmas.domain.Menu;
 import christmas.domain.OrderMenus;
 import christmas.domain.Reservation;
 import christmas.domain.VisitDate;
+import christmas.domain.discount.ChampagneGiftDiscount;
+import christmas.domain.discount.ChristmasDayDiscount;
+import christmas.domain.discount.OrderDiscount;
+import christmas.domain.discount.OrderDiscounts;
+import christmas.domain.discount.SpecialStarDiscount;
+import christmas.domain.discount.WeekDayDiscount;
+import christmas.domain.discount.WeekEndDiscount;
 import christmas.domain.dto.MenuDto;
 import christmas.domain.mapper.MenuMapper;
 import christmas.view.InputView;
@@ -28,6 +38,12 @@ public class DecemberPromotionController {
         printOrderMenus(reservation.getOrderMenus());
         printTotalPayment(reservation.getTotalPayment());
 
+        OrderDiscounts orderDiscounts = initDiscounts();
+        DiscountManager discountManager = new DiscountManager(reservation, orderDiscounts);
+        List<EventBenefit> benefits = discountManager.getBenefits();
+        EventBenefits eventBenefitStatistics = new EventBenefits(benefits);
+
+        printGifts(eventBenefitStatistics.getGifts());
     }
 
     private Reservation makeReservation() {
@@ -52,6 +68,13 @@ public class DecemberPromotionController {
         });
     }
 
+    private OrderDiscounts initDiscounts() {
+        List<OrderDiscount> orderDiscounts = List.of(new ChristmasDayDiscount(), new WeekDayDiscount(),
+                new WeekEndDiscount(), new SpecialStarDiscount(),
+                new ChampagneGiftDiscount());
+
+        return new OrderDiscounts(orderDiscounts);
+    }
 
     private void printIntroducingBenefitMessage(LocalDate date) {
         outputView.printIntroducingBenefitMessage(date.getDayOfMonth());
@@ -66,6 +89,10 @@ public class DecemberPromotionController {
         outputView.printTotalPayment(totalPayment);
     }
 
+    private void printGifts(List<Menu> gifts) {
+        List<MenuDto> giftsDto = gifts.stream().map(MenuMapper::toDto).toList();
+        outputView.printGifts(giftsDto);
+    }
 
 
     private <R> R repeatToReadBeforeSuccess(Supplier<R> reader) {

@@ -10,8 +10,10 @@ public class OutputView {
     private final static String INTRODUCING_BENEFIT_EXPRESSION = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n";
     private final static String ORDERED_MENU_MESSAGE = "\n<주문 메뉴>";
     private final static String TOTAL_PAYMENT_MESSAGE = "\n<할인 전 총주문 금액>";
+    private final static String GIFT_MESSAGE = "\n<증정 메뉴>";
     private final static String MENU_EXPRESSION = "%s %d개%n";
     private final static String COST_EXPRESSION = "%s원%n";
+    private final static String NOTHING_TO_PRINT_MESSAGE = "없음";
 
     private String convertNumberToCostExpression(int number) { return DECIMAL_FORMAT.format(number); }
 
@@ -21,6 +23,9 @@ public class OutputView {
         System.out.printf(INTRODUCING_BENEFIT_EXPRESSION, date);
     }
 
+    private void printNothingToPrintMessage() {
+        System.out.println(NOTHING_TO_PRINT_MESSAGE);
+    }
 
     private void printMenu(MenuDto menu) {
         System.out.printf(MENU_EXPRESSION, menu.name(), menu.count());
@@ -33,6 +38,17 @@ public class OutputView {
     public void printTotalPayment(int totalPayment) {
         System.out.println(TOTAL_PAYMENT_MESSAGE);
         System.out.printf(COST_EXPRESSION, convertNumberToCostExpression(totalPayment));
+    }
+
+    public void printGifts(List<MenuDto> gifts) {
+        System.out.println(GIFT_MESSAGE);
+
+        if (gifts.isEmpty()) {
+            printNothingToPrintMessage();
+            return;
+        }
+
+        gifts.forEach(this::printMenu);
     }
 
 

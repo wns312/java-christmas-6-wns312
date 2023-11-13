@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class OrderMenusTest {
+class MenusTest {
 
     @DisplayName("메뉴 개수 성공 테스트")
     @ParameterizedTest
