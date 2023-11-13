@@ -17,6 +17,10 @@ public class VisitDate {
         this.localDate = createLocaldate(date);
     }
 
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
     private void validateMinDate(int date) {
         if (date < MIN_DATE) {
             throw IllegalArgumentExceptionType.INVALID_DATE.getException();
