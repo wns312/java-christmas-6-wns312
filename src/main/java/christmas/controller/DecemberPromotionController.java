@@ -1,8 +1,13 @@
 package christmas.controller;
 
+import christmas.domain.OrderMenu;
+import christmas.domain.OrderMenus;
 import christmas.domain.VisitDate;
+import christmas.domain.dto.OrderMenuDto;
+import christmas.domain.mapper.OrderMenuMapper;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class DecemberPromotionController {
@@ -16,6 +21,7 @@ public class DecemberPromotionController {
 
     public void run() {
         VisitDate visitDate = readVisitDate();
+        OrderMenus orderMenus = readOrderMenus();
 
     }
 
@@ -23,6 +29,15 @@ public class DecemberPromotionController {
         outputView.printIntroducingPlannerMessage();
 
         return repeatToReadBeforeSuccess(() -> new VisitDate(inputView.readDateOfVisit()));
+    }
+
+    private OrderMenus readOrderMenus() {
+        return repeatToReadBeforeSuccess(() -> {
+            List<OrderMenuDto> orderMenusData = inputView.readOrderMenus();
+            List<OrderMenu> orderMenus = orderMenusData.stream().map(OrderMenuMapper::toDomain).toList();
+
+            return new OrderMenus(orderMenus);
+        });
     }
 
     private <R> R repeatToReadBeforeSuccess(Supplier<R> reader) {
