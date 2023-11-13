@@ -16,4 +16,10 @@ public class EventBenefits {
                 .toList();
     }
 
+    public List<EventBenefit> getEventBenefits() {
+        return eventBenefits.stream()
+                .filter(EventBenefit::hasActualBenefits)
+                .toList();
+    }
+
 }

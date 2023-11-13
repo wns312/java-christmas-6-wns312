@@ -7,6 +7,7 @@ import christmas.domain.Menu;
 import christmas.domain.OrderMenus;
 import christmas.domain.Reservation;
 import christmas.domain.VisitDate;
+import christmas.domain.constant.DecemberEventBadge;
 import christmas.domain.discount.ChampagneGiftDiscount;
 import christmas.domain.discount.ChristmasDayDiscount;
 import christmas.domain.discount.OrderDiscount;
@@ -14,7 +15,9 @@ import christmas.domain.discount.OrderDiscounts;
 import christmas.domain.discount.SpecialStarDiscount;
 import christmas.domain.discount.WeekDayDiscount;
 import christmas.domain.discount.WeekEndDiscount;
+import christmas.domain.dto.EventBenefitDto;
 import christmas.domain.dto.MenuDto;
+import christmas.domain.mapper.EventBenefitMapper;
 import christmas.domain.mapper.MenuMapper;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -43,7 +46,9 @@ public class DecemberPromotionController {
         List<EventBenefit> benefits = discountManager.getBenefits();
         EventBenefits eventBenefitStatistics = new EventBenefits(benefits);
 
+
         printGifts(eventBenefitStatistics.getGifts());
+        printEventBenefits(eventBenefitStatistics.getEventBenefits());
     }
 
     private Reservation makeReservation() {
@@ -94,6 +99,10 @@ public class DecemberPromotionController {
         outputView.printGifts(giftsDto);
     }
 
+    private void printEventBenefits(List<EventBenefit> eventBenefits) {
+        List<EventBenefitDto> eventBenefitsDto = eventBenefits.stream().map(EventBenefitMapper::toDto).toList();
+        outputView.printEventBenefits(eventBenefitsDto);
+    }
 
     private <R> R repeatToReadBeforeSuccess(Supplier<R> reader) {
         while (true) {

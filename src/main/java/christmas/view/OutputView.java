@@ -1,5 +1,7 @@
 package christmas.view;
 
+import christmas.domain.constant.DecemberEventBadge;
+import christmas.domain.dto.EventBenefitDto;
 import christmas.domain.dto.MenuDto;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -11,8 +13,13 @@ public class OutputView {
     private final static String ORDERED_MENU_MESSAGE = "\n<주문 메뉴>";
     private final static String TOTAL_PAYMENT_MESSAGE = "\n<할인 전 총주문 금액>";
     private final static String GIFT_MESSAGE = "\n<증정 메뉴>";
+    private final static String EVENT_BENEFITS_MESSAGE = "\n<혜택 내역>";
+    private final static String EVENT_TOTAL_BENEFIT_AMOUNT_MESSAGE = "\n<총혜택 금액>";
+    private final static String DISCOUNTED_TOTAL_PAYMENT_MESSAGE = "\n<할인 후 예상 결제 금액>";
+    private final static String DECEMBER_EVENT_BADGE_MESSAGE = "\n<12월 이벤트 배지>";
     private final static String MENU_EXPRESSION = "%s %d개%n";
     private final static String COST_EXPRESSION = "%s원%n";
+    private final static String EVENT_BENEFIT_EXPRESSION = "%s: %s원%n";
     private final static String NOTHING_TO_PRINT_MESSAGE = "없음";
 
     private String convertNumberToCostExpression(int number) { return DECIMAL_FORMAT.format(number); }
@@ -49,6 +56,25 @@ public class OutputView {
         }
 
         gifts.forEach(this::printMenu);
+    }
+
+    public void printEventBenefit(EventBenefitDto eventBenefit) {
+        System.out.printf(
+                EVENT_BENEFIT_EXPRESSION,
+                eventBenefit.discountEventName(),
+                convertNumberToCostExpression(eventBenefit.discount() * -1)
+        );
+    }
+
+    public void printEventBenefits(List<EventBenefitDto> eventBenefits) {
+        System.out.println(EVENT_BENEFITS_MESSAGE);
+
+        if (eventBenefits.isEmpty()) {
+            printNothingToPrintMessage();
+            return;
+        }
+
+        eventBenefits.forEach(this::printEventBenefit);
     }
 
 
