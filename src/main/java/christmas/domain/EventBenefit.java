@@ -20,6 +20,10 @@ public class EventBenefit {
         return discountEvent;
     }
 
+    public int getDiscountAmount() {
+        return benefit.getDiscountAmount();
+    }
+
     public List<Menu> getGifts() {
         return benefit.getGifts();
     }

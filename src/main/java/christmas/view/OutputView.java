@@ -82,6 +82,10 @@ public class OutputView {
         System.out.printf(COST_EXPRESSION, convertNumberToCostExpression(totalBenefitAmount * -1));
     }
 
+    public void printDiscountedTotalPayment(int totalPayment) {
+        System.out.println(DISCOUNTED_TOTAL_PAYMENT_MESSAGE);
+        System.out.printf(COST_EXPRESSION, convertNumberToCostExpression(totalPayment));
+    }
 
     public void printErrorMessage(String message) {
         System.out.println(message);

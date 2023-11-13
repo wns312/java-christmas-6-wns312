@@ -50,6 +50,7 @@ public class DecemberPromotionController {
         printGifts(eventBenefitStatistics.getGifts());
         printEventBenefits(eventBenefitStatistics.getEventBenefits());
         printEventBenefitsTotalAmount(eventBenefitStatistics.getEventBenefits());
+        printDiscountedTotalPayment(reservation.getTotalPayment() - eventBenefitStatistics.getDiscountAmount());
     }
 
     private Reservation makeReservation() {
@@ -110,6 +111,9 @@ public class DecemberPromotionController {
         outputView.printEventBenefitsAmount(sum);
     }
 
+    private void printDiscountedTotalPayment(int totalPayment) {
+        outputView.printDiscountedTotalPayment(totalPayment);
+    }
 
     private <R> R repeatToReadBeforeSuccess(Supplier<R> reader) {
         while (true) {
