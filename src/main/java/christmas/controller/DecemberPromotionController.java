@@ -51,6 +51,7 @@ public class DecemberPromotionController {
         printEventBenefits(eventBenefitStatistics.getEventBenefits());
         printEventBenefitsTotalAmount(eventBenefitStatistics.getEventBenefits());
         printDiscountedTotalPayment(reservation.getTotalPayment() - eventBenefitStatistics.getDiscountAmount());
+        printBadge(DecemberEventBadge.getBadgeByPayment(eventBenefitStatistics.getTotalBenefits()));
     }
 
     private Reservation makeReservation() {
@@ -113,6 +114,9 @@ public class DecemberPromotionController {
 
     private void printDiscountedTotalPayment(int totalPayment) {
         outputView.printDiscountedTotalPayment(totalPayment);
+    }
+    private void printBadge(DecemberEventBadge eventBadge) {
+        outputView.printBadge(eventBadge);
     }
 
     private <R> R repeatToReadBeforeSuccess(Supplier<R> reader) {

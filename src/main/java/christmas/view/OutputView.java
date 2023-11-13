@@ -87,6 +87,16 @@ public class OutputView {
         System.out.printf(COST_EXPRESSION, convertNumberToCostExpression(totalPayment));
     }
 
+    public void printBadge(DecemberEventBadge eventBadge) {
+        System.out.println(DECEMBER_EVENT_BADGE_MESSAGE);
+
+        if (eventBadge == DecemberEventBadge.NO_BADGE) {
+            printNothingToPrintMessage();
+            return;
+        }
+        System.out.println(eventBadge.getExpression());
+    }
+
     public void printErrorMessage(String message) {
         System.out.println(message);
     }

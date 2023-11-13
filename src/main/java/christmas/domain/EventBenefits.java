@@ -26,4 +26,10 @@ public class EventBenefits {
         return eventBenefits.stream()
                 .mapToInt(EventBenefit::getDiscountAmount).sum();
     }
+
+    public int getTotalBenefits() {
+        return eventBenefits.stream()
+                .mapToInt(EventBenefit::getBenefitAmount)
+                .sum();
+    }
 }
