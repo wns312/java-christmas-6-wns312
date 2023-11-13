@@ -77,6 +77,11 @@ public class OutputView {
         eventBenefits.forEach(this::printEventBenefit);
     }
 
+    public void printEventBenefitsAmount(int totalBenefitAmount) {
+        System.out.println(EVENT_TOTAL_BENEFIT_AMOUNT_MESSAGE);
+        System.out.printf(COST_EXPRESSION, convertNumberToCostExpression(totalBenefitAmount * -1));
+    }
+
 
     public void printErrorMessage(String message) {
         System.out.println(message);

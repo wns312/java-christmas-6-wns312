@@ -49,6 +49,7 @@ public class DecemberPromotionController {
 
         printGifts(eventBenefitStatistics.getGifts());
         printEventBenefits(eventBenefitStatistics.getEventBenefits());
+        printEventBenefitsTotalAmount(eventBenefitStatistics.getEventBenefits());
     }
 
     private Reservation makeReservation() {
@@ -103,6 +104,12 @@ public class DecemberPromotionController {
         List<EventBenefitDto> eventBenefitsDto = eventBenefits.stream().map(EventBenefitMapper::toDto).toList();
         outputView.printEventBenefits(eventBenefitsDto);
     }
+
+    private void printEventBenefitsTotalAmount(List<EventBenefit> eventBenefits) {
+        int sum = eventBenefits.stream().mapToInt(EventBenefit::getBenefitAmount).sum();
+        outputView.printEventBenefitsAmount(sum);
+    }
+
 
     private <R> R repeatToReadBeforeSuccess(Supplier<R> reader) {
         while (true) {
