@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class OrderMenusTest {
@@ -25,13 +26,46 @@ class OrderMenusTest {
 
     }
 
-    @DisplayName("메뉴 개수 실패 테스트")
+    @DisplayName("메뉴 최소 개수 실패 테스트")
+    @Test
+    void createZeroOrderMenuAmountTest() {
+        assertThatThrownBy(() -> new OrderMenus(List.of()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
+
+    }
+
+    @DisplayName("메뉴 최대 개수 실패 테스트")
     @ParameterizedTest
     @ValueSource(ints = {11})
-    void createOrderMenusFailTest(int count) {
+    void createExceededOrderMenuAmountTest(int count) {
         OrderMenu barbecuedRibs = new OrderMenu(MenuType.BARBECUED_RIBS, count);
         OrderMenu caesarSalad = new OrderMenu(MenuType.CAESAR_SALAD, count);
         assertThatThrownBy(() -> new OrderMenus(List.of(barbecuedRibs, caesarSalad)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
+
+    }
+
+    @DisplayName("중복 메뉴 실패 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {1})
+    void createDuplicatedOrderMenus(int count) {
+        OrderMenu barbecuedRibs = new OrderMenu(MenuType.BARBECUED_RIBS, count);
+        assertThatThrownBy(() -> new OrderMenus(List.of(barbecuedRibs, barbecuedRibs)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
+
+    }
+
+    @DisplayName("음료 메뉴만 있는 주문 실패 테스트")
+    @ParameterizedTest
+    @EnumSource(value = MenuType.class, names = {"ZERO_COKE", "RED_WINE", "CHAMPAGNE"})
+    void createOnlyBeverageFailTest(MenuType menuType) {
+        int count = 1;
+        OrderMenu beverage = new OrderMenu(menuType, count);
+
+        assertThatThrownBy(() -> new OrderMenus(List.of(beverage)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
 
