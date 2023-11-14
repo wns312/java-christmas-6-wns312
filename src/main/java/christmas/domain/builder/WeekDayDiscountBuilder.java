@@ -22,6 +22,8 @@ public class WeekDayDiscountBuilder extends DiscountBuilder {
 
     @Override
     int getDiscount() {
+        validate();
+
         List<Menu> elements = orderMenus.getElements();
 
         return elements.stream()

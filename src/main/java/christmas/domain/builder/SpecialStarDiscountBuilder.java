@@ -19,6 +19,8 @@ public class SpecialStarDiscountBuilder extends DiscountBuilder {
 
     @Override
     int getDiscount() {
+        validate();
+
         return FIX_DISCOUNT_AMOUNT;
     }
 }

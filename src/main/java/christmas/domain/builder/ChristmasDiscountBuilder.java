@@ -21,6 +21,8 @@ public class ChristmasDiscountBuilder extends DiscountBuilder {
 
     @Override
     int getDiscount() {
+        validate();
+
         return BASE_DISCOUNT_AMOUNT + (visitDate.getDayOfMonth() * ADDITIONAL_DISCOUNT_AMOUNT);
     }
 }
