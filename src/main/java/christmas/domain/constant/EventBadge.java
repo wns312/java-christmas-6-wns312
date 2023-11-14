@@ -1,5 +1,6 @@
 package christmas.domain.constant;
 
+import christmas.exception.IllegalStateExceptionType;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,11 +24,19 @@ public enum EventBadge {
         return expression;
     }
 
+    private static void validateBenefitAmount(int benefitAmount) {
+        if (benefitAmount < NO_BADGE.minimumPayment) {
+            throw IllegalStateExceptionType.INVALID_BENEFIT_AMOUNT.getException();
+        }
+    }
+
     private static List<EventBadge> filterBadgesByPayment(int payment) {
         return Stream.of(values()).filter(eventBadge -> eventBadge.minimumPayment <= payment).toList();
     }
 
     public static EventBadge getBadgeByBenefitAmount(int benefitAmount) {
+        validateBenefitAmount(benefitAmount);
+
         List<EventBadge> badges = filterBadgesByPayment(benefitAmount);
 
         return Collections.max(badges, Comparator.comparing(eventBadge -> eventBadge.minimumPayment));
