@@ -45,7 +45,7 @@ public class OrderMenusValidation {
 
     private static void validateIsBeverageOnly(List<Menu> elements) {
         elements.stream()
-                .filter(orderMenu -> orderMenu.isNotCategoryOf(MenuCategory.BEVERAGE))
+                .filter(orderMenu -> !orderMenu.isBeverage())
                 .findFirst()
                 .orElseThrow(IllegalArgumentExceptionType.INVALID_ORDERING::getException);
     }

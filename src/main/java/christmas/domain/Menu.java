@@ -1,7 +1,6 @@
 package christmas.domain;
 
 import christmas.domain.constant.MenuType;
-import christmas.domain.constant.MenuCategory;
 import christmas.exception.IllegalArgumentExceptionType;
 
 public class Menu {
@@ -39,11 +38,5 @@ public class Menu {
         return menuType.getPrice() * count;
     }
 
-    public boolean isCategoryOf(MenuCategory menuCategory) {
-        return menuCategory == menuType.getCategory();
-    }
-
-    public boolean isNotCategoryOf(MenuCategory menuCategory) {
-        return !isCategoryOf(menuCategory);
-    }
+    public boolean isBeverage() { return menuType.isBeverage(); }
 }

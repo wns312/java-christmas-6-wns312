@@ -52,28 +52,4 @@ class MenuTest {
         assertThat(menu.getMenu()).isEqualTo(menuType);
     }
 
-    @DisplayName("메뉴 카테고리 일치 테스트")
-    @ParameterizedTest
-    @EnumSource(MenuType.class)
-    void checkIsSameCategory(MenuType menuType) {
-        int count = 1;
-        Menu menu = new Menu(menuType, count);
-
-        assertThat(menu.isCategoryOf(menuType.getCategory()))
-                .isTrue();
-
-    }
-
-    @DisplayName("메뉴 카테고리 불일치 테스트")
-    @ParameterizedTest
-    @EnumSource(MenuType.class)
-    void checkIsNotSameCategory(MenuType menuType) {
-        int count = 1;
-        Menu menu = new Menu(menuType, count);
-
-        assertThat(menu.isNotCategoryOf(menuType.getCategory()))
-                .isFalse();
-
-    }
-
 }

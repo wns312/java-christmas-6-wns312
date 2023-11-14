@@ -35,6 +35,8 @@ public enum MenuType {
         return price;
     }
 
+    public boolean isBeverage() { return category == MenuCategory.BEVERAGE; }
+
     public MenuCategory getCategory() {
         return category;
     }
