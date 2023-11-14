@@ -1,17 +1,14 @@
 package christmas.controller;
 
+import christmas.domain.discount.factory.DiscountFactory;
 import christmas.domain.result.EventResult;
 import christmas.domain.order.Menu;
 import christmas.domain.order.OrderMenus;
 import christmas.domain.order.Reservation;
 import christmas.domain.order.VisitDate;
-import christmas.domain.discount.ChristmasDiscountBuilder;
 import christmas.domain.discount.Discount;
 import christmas.domain.discount.DiscountBuilder;
 import christmas.domain.discount.DiscountDirector;
-import christmas.domain.discount.SpecialStarDiscountBuilder;
-import christmas.domain.discount.WeekDayDiscountBuilder;
-import christmas.domain.discount.WeekEndDiscountBuilder;
 import christmas.domain.constant.EventBadge;
 import christmas.domain.discount.dto.DiscountDto;
 import christmas.domain.order.dto.MenuDto;
@@ -20,7 +17,6 @@ import christmas.domain.discount.mapper.DiscountMapper;
 import christmas.domain.order.mapper.MenuMapper;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -40,54 +36,8 @@ public class DecemberPromotionController {
         printEventResult(reservation, eventResult);
     }
 
-    private void printOrderInformation(Reservation reservation) {
-        printIntroducingBenefitMessage(reservation.getDate());
-        printOrderMenus(reservation.getOrderMenus());
-        printTotalPayment(reservation.getTotalPayment());
-    }
-
-    private void printEventResult(Reservation reservation, EventResult eventResult) {
-        int totalPaymentAfterDiscount = eventResult.getTotalPaymentAfterDiscount(reservation.getTotalPayment());
-
-        printGifts(eventResult.getGifts());
-        printDiscount(eventResult.getDiscounts());
-
-        outputView.printTotalBenefitAmount(eventResult.getTotalBenefitAmount());
-        outputView.printTotalPaymentAfterDiscount(totalPaymentAfterDiscount);
-        printBadges(eventResult.getTotalBenefitAmount());
-    }
-
     private Reservation createReservation() {
         return new Reservation(readVisitDate(), readOrderMenus());
-    }
-
-    private EventResult createEventResult(Reservation reservation) {
-        DiscountDirector discountDirector = initDiscountDirector(reservation);
-        return new EventResult(discountDirector.discountAll(), discountDirector.getGifts());
-    }
-
-    private void printBadges(int totalBenefitAmount) {
-        EventBadge badge = EventBadge.getBadgeByBenefitAmount(totalBenefitAmount);
-        outputView.printBadge(badge);
-    }
-
-    private void printDiscount(List<Discount> discounts) {
-        List<DiscountDto> discountsData = discounts.stream().map(DiscountMapper::toDto).toList();
-        outputView.printDiscounts(discountsData);
-    }
-
-    private DiscountDirector initDiscountDirector(Reservation reservation) {
-        List<DiscountBuilder> discountBuilders = initDiscountBuilders(reservation);
-        return new DiscountDirector(discountBuilders, new ChampagneGiftGenerator(reservation.getTotalPayment()));
-    }
-
-    private List<DiscountBuilder> initDiscountBuilders(Reservation reservation) {
-        return List.of(
-                new ChristmasDiscountBuilder(reservation),
-                new WeekDayDiscountBuilder(reservation),
-                new WeekEndDiscountBuilder(reservation),
-                new SpecialStarDiscountBuilder(reservation)
-        );
     }
 
     private VisitDate readVisitDate() {
@@ -104,8 +54,20 @@ public class DecemberPromotionController {
         });
     }
 
-    private void printIntroducingBenefitMessage(LocalDate date) {
-        outputView.printIntroducingBenefitMessage(date.getDayOfMonth());
+    private EventResult createEventResult(Reservation reservation) {
+        DiscountDirector discountDirector = initDiscountDirector(reservation);
+        return new EventResult(discountDirector.discountAll(), discountDirector.getGifts());
+    }
+
+    private DiscountDirector initDiscountDirector(Reservation reservation) {
+        List<DiscountBuilder> discountBuilders = DiscountFactory.buildAll(reservation);
+        return new DiscountDirector(discountBuilders, new ChampagneGiftGenerator(reservation.getTotalPayment()));
+    }
+
+    private void printOrderInformation(Reservation reservation) {
+        outputView.printIntroducingBenefitMessage(reservation.getVisitDayOfMonth());
+        printOrderMenus(reservation.getOrderMenus());
+        outputView.printTotalPayment(reservation.getTotalPayment());
     }
 
     private void printOrderMenus(List<Menu> orderOrderMenus) {
@@ -113,13 +75,30 @@ public class DecemberPromotionController {
         outputView.printOrderMenus(orderMenusDto);
     }
 
-    private void printTotalPayment(int totalPayment) {
-        outputView.printTotalPayment(totalPayment);
+    private void printEventResult(Reservation reservation, EventResult eventResult) {
+        int totalPaymentAfterDiscount = eventResult.getTotalPaymentAfterDiscount(reservation.getTotalPayment());
+
+        printGifts(eventResult.getGifts());
+        printDiscount(eventResult.getDiscounts());
+
+        outputView.printTotalBenefitAmount(eventResult.getTotalBenefitAmount());
+        outputView.printTotalPaymentAfterDiscount(totalPaymentAfterDiscount);
+        printBadges(eventResult.getTotalBenefitAmount());
     }
 
     private void printGifts(List<Menu> gifts) {
         List<MenuDto> giftsData = gifts.stream().map(MenuMapper::toDto).toList();
         outputView.printGifts(giftsData);
+    }
+
+    private void printDiscount(List<Discount> discounts) {
+        List<DiscountDto> discountsData = discounts.stream().map(DiscountMapper::toDto).toList();
+        outputView.printDiscounts(discountsData);
+    }
+
+    private void printBadges(int totalBenefitAmount) {
+        EventBadge badge = EventBadge.getBadgeByBenefitAmount(totalBenefitAmount);
+        outputView.printBadge(badge);
     }
 
     private <R> R repeatToReadBeforeSuccess(Supplier<R> reader) {
