@@ -7,19 +7,21 @@ import christmas.domain.constant.DiscountEvent;
 import java.util.List;
 
 public class WeekDayDiscountBuilder extends DiscountBuilder {
+    private static final DiscountEvent WEEKDAY_EVENT = DiscountEvent.WEEKDAY;
+
     private static final int DISCOUNT_AMOUNT_PER_MENU = -2023;
 
     public WeekDayDiscountBuilder(VisitDate visitDate, OrderMenus orderMenus) {
-        super(DiscountEvent.WEEKDAY, visitDate, orderMenus);
+        super(WEEKDAY_EVENT, visitDate, orderMenus);
     }
 
     @Override
-    public boolean isAvailableDate() {
+    boolean isAvailableDate() {
         return visitDate.isWeekDay();
     }
 
     @Override
-    public int getDiscount() {
+    int getDiscount() {
         List<Menu> elements = orderMenus.getElements();
 
         return elements.stream()

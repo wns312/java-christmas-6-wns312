@@ -16,13 +16,13 @@ public class DiscountDirector {
         this.giftGenerator = giftGenerator;
     }
 
-    public boolean isAvailablePayment(DiscountBuilder discountBuilder) {
+    private boolean isAvailablePayment(DiscountBuilder discountBuilder) {
         return discountBuilder.getTotalPayment() >= MINIMUM_PAYMENT_AMOUNT;
     }
 
     private int discount(DiscountBuilder discountBuilder) {
-        if (isAvailablePayment(discountBuilder) && discountBuilder.isAvailableDate()) {
-            return discountBuilder.getDiscount();
+        if (isAvailablePayment(discountBuilder)) {
+            return discountBuilder.discount();
         }
 
         return NO_DISCOUNT;

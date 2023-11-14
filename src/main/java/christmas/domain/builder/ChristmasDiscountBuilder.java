@@ -15,12 +15,12 @@ public class ChristmasDiscountBuilder extends DiscountBuilder {
     }
 
     @Override
-    public boolean isAvailableDate() {
+    boolean isAvailableDate() {
         return visitDate.getDayOfMonth() <= CHRISTMAS_DATE;
     }
 
     @Override
-    public int getDiscount() {
+    int getDiscount() {
         return BASE_DISCOUNT_AMOUNT + (visitDate.getDayOfMonth() * ADDITIONAL_DISCOUNT_AMOUNT);
     }
 }

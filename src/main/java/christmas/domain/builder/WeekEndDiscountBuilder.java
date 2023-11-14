@@ -15,12 +15,12 @@ public class WeekEndDiscountBuilder extends DiscountBuilder {
     }
 
     @Override
-    public boolean isAvailableDate() {
+    boolean isAvailableDate() {
         return visitDate.isWeekEnd();
     }
 
     @Override
-    public int getDiscount() {
+    int getDiscount() {
         List<Menu> elements = orderMenus.getElements();
 
         return elements.stream()

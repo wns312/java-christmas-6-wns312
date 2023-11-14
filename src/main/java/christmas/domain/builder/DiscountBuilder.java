@@ -5,10 +5,11 @@ import christmas.domain.VisitDate;
 import christmas.domain.constant.DiscountEvent;
 
 public abstract class DiscountBuilder {
+    static final int NO_DISCOUNT = 0;
 
-    protected final DiscountEvent discountEvent;
-    protected final VisitDate visitDate;
-    protected final OrderMenus orderMenus;
+    final DiscountEvent discountEvent;
+    final VisitDate visitDate;
+    final OrderMenus orderMenus;
 
     public DiscountBuilder(DiscountEvent discountEvent, VisitDate visitDate, OrderMenus orderMenus) {
         this.discountEvent = discountEvent;
@@ -16,15 +17,23 @@ public abstract class DiscountBuilder {
         this.orderMenus = orderMenus;
     }
 
-    public DiscountEvent getDiscountEvent() {
+    DiscountEvent getDiscountEvent() {
         return discountEvent;
     }
 
-    public int getTotalPayment() {
+    int getTotalPayment() {
         return orderMenus.getTotalPayment();
     }
 
-    public abstract boolean isAvailableDate();
+    int discount() {
+        if (isAvailableDate()) {
+            return getDiscount();
+        }
 
-    public abstract int getDiscount();
+        return NO_DISCOUNT;
+    }
+
+    abstract boolean isAvailableDate();
+
+    abstract int getDiscount();
 }
