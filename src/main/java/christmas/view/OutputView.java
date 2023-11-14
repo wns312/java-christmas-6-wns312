@@ -2,8 +2,8 @@ package christmas.view;
 
 import christmas.domain.constant.EventBadge;
 import christmas.domain.constant.DecemberEvent;
-import christmas.domain.dto.DiscountDto;
-import christmas.domain.dto.MenuDto;
+import christmas.domain.discount.dto.DiscountDto;
+import christmas.domain.order.dto.MenuDto;
 import java.text.DecimalFormat;
 import java.util.List;
 

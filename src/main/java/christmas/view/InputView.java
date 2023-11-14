@@ -1,7 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.domain.dto.MenuDto;
+import christmas.domain.order.dto.MenuDto;
 import java.util.Arrays;
 import java.util.List;
 
