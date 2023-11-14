@@ -5,10 +5,11 @@ import christmas.domain.VisitDate;
 import christmas.domain.constant.DiscountEvent;
 
 public class SpecialStarDiscountBuilder extends DiscountBuilder {
+    private static final DiscountEvent SPECIAL_EVENT = DiscountEvent.SPECIAL;
     private static final int FIX_DISCOUNT_AMOUNT = -1000;
 
-    public SpecialStarDiscountBuilder(DiscountEvent discountEvent, VisitDate visitDate, OrderMenus orderMenus) {
-        super(discountEvent, visitDate, orderMenus);
+    public SpecialStarDiscountBuilder(VisitDate visitDate, OrderMenus orderMenus) {
+        super(SPECIAL_EVENT, visitDate, orderMenus);
     }
 
     @Override

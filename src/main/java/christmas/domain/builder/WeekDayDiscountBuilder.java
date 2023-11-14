@@ -9,8 +9,8 @@ import java.util.List;
 public class WeekDayDiscountBuilder extends DiscountBuilder {
     private static final int DISCOUNT_AMOUNT_PER_MENU = -2023;
 
-    public WeekDayDiscountBuilder(DiscountEvent discountEvent, VisitDate visitDate, OrderMenus orderMenus) {
-        super(discountEvent, visitDate, orderMenus);
+    public WeekDayDiscountBuilder(VisitDate visitDate, OrderMenus orderMenus) {
+        super(DiscountEvent.WEEKDAY, visitDate, orderMenus);
     }
 
     @Override

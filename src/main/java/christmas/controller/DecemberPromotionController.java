@@ -84,10 +84,10 @@ public class DecemberPromotionController {
 
     private List<DiscountBuilder> initDiscountBuilders(VisitDate visitDate, OrderMenus orderMenus) {
         return List.of(
-                new ChristmasDiscountBuilder(DiscountEvent.CHRISTMAS_D_DAY, visitDate, orderMenus),
-                new WeekDayDiscountBuilder(DiscountEvent.WEEKDAY, visitDate, orderMenus),
-                new WeekEndDiscountBuilder(DiscountEvent.WEEKEND, visitDate, orderMenus),
-                new SpecialStarDiscountBuilder(DiscountEvent.SPECIAL, visitDate, orderMenus)
+                new ChristmasDiscountBuilder(visitDate, orderMenus),
+                new WeekDayDiscountBuilder(visitDate, orderMenus),
+                new WeekEndDiscountBuilder(visitDate, orderMenus),
+                new SpecialStarDiscountBuilder(visitDate, orderMenus)
         );
     }
 
