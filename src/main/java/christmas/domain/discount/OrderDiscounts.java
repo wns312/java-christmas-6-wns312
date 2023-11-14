@@ -1,7 +1,10 @@
 package christmas.domain.discount;
 
 import christmas.domain.EventBenefit;
+import christmas.domain.EventBenefits;
 import christmas.domain.Menu;
+import christmas.domain.OrderMenus;
+import christmas.domain.VisitDate;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,9 +15,16 @@ public class OrderDiscounts {
         this.orderDiscounts = orderDiscounts;
     }
 
-    public List<EventBenefit> getEventBenefits(int payment, LocalDate date, List<Menu> menus) {
-        return orderDiscounts.stream()
+    public EventBenefits getEventBenefits(VisitDate visitDate, OrderMenus orderMenus) {
+        int payment = orderMenus.getTotalPayment();
+        LocalDate date = visitDate.getLocalDate();
+        List<Menu> menus = orderMenus.getElements();
+
+        List<EventBenefit> eventBenefits = orderDiscounts.stream()
                 .map(orderDiscount -> orderDiscount.calculateEventBenefit(payment, date, menus))
+                .filter(EventBenefit::hasActualBenefits)
                 .toList();
+
+        return new EventBenefits(eventBenefits);
     }
 }

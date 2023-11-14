@@ -1,11 +1,9 @@
 package christmas.controller;
 
-import christmas.domain.DiscountManager;
 import christmas.domain.EventBenefit;
 import christmas.domain.EventBenefits;
 import christmas.domain.Menu;
 import christmas.domain.OrderMenus;
-import christmas.domain.Reservation;
 import christmas.domain.VisitDate;
 import christmas.domain.constant.DecemberEventBadge;
 import christmas.domain.discount.ChampagneGiftDiscount;
@@ -35,30 +33,21 @@ public class DecemberPromotionController {
     }
 
     public void run() {
-        Reservation reservation = makeReservation();
-
-        printIntroducingBenefitMessage(reservation.getVisitLocalDate());
-        printOrderMenus(reservation.getOrderMenus());
-        printTotalPayment(reservation.getTotalPayment());
-
-        OrderDiscounts orderDiscounts = initDiscounts();
-        DiscountManager discountManager = new DiscountManager(reservation, orderDiscounts);
-        List<EventBenefit> benefits = discountManager.getBenefits();
-        EventBenefits eventBenefitStatistics = new EventBenefits(benefits);
-
-
-        printGifts(eventBenefitStatistics.getGifts());
-        printEventBenefits(eventBenefitStatistics.getEventBenefits());
-        printEventBenefitsTotalAmount(eventBenefitStatistics.getEventBenefits());
-        printDiscountedTotalPayment(reservation.getTotalPayment() - eventBenefitStatistics.getDiscountAmount());
-        printBadge(DecemberEventBadge.getBadgeByPayment(eventBenefitStatistics.getTotalBenefits()));
-    }
-
-    private Reservation makeReservation() {
         VisitDate visitDate = readVisitDate();
         OrderMenus orderMenus = readOrderMenus();
 
-        return new Reservation(visitDate, orderMenus);
+        printIntroducingBenefitMessage(visitDate.getLocalDate());
+        printOrderMenus(orderMenus.getElements());
+        printTotalPayment(orderMenus.getTotalPayment());
+
+        OrderDiscounts orderDiscounts = initDiscounts();
+        EventBenefits eventBenefits = orderDiscounts.getEventBenefits(visitDate, orderMenus);
+
+        printGifts(eventBenefits.getGifts());
+        printEventBenefits(eventBenefits.getEventBenefits());
+        printEventBenefitsTotalAmount(eventBenefits.getEventBenefits());
+        printDiscountedTotalPayment(orderMenus.getTotalPayment() - eventBenefits.getDiscountAmount());
+        printBadge(DecemberEventBadge.getBadgeByPayment(eventBenefits.getTotalBenefits()));
     }
 
     private VisitDate readVisitDate() {
