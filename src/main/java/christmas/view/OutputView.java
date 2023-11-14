@@ -1,7 +1,7 @@
 package christmas.view;
 
-import christmas.domain.constant.DecemberEventBadge;
-import christmas.domain.constant.DiscountEvent;
+import christmas.domain.constant.EventBadge;
+import christmas.domain.constant.DecemberEvent;
 import christmas.domain.dto.DiscountDto;
 import christmas.domain.dto.MenuDto;
 import java.text.DecimalFormat;
@@ -60,10 +60,10 @@ public class OutputView {
     }
 
     private void printDiscount(DiscountDto discount) {
-        DiscountEvent discountEvent = discount.discountEvent();
+        DecemberEvent decemberEvent = discount.decemberEvent();
         String discountAmountExpression = convertNumberToCostExpression(discount.discountAmount());
 
-        System.out.printf(EVENT_BENEFIT_EXPRESSION, discountEvent.getEventName(), discountAmountExpression);
+        System.out.printf(EVENT_BENEFIT_EXPRESSION, decemberEvent.getEventName(), discountAmountExpression);
     }
 
     public void printDiscounts(List<DiscountDto> discounts) {
@@ -89,10 +89,10 @@ public class OutputView {
         System.out.printf(COST_EXPRESSION, discountedTotalPaymentExpression);
     }
 
-    public void printBadge(DecemberEventBadge eventBadge) {
+    public void printBadge(EventBadge eventBadge) {
         System.out.println(DECEMBER_EVENT_BADGE_MESSAGE);
 
-        if (eventBadge == DecemberEventBadge.NO_BADGE) {
+        if (eventBadge == EventBadge.NO_BADGE) {
             printNothingToPrintMessage();
             return;
         }

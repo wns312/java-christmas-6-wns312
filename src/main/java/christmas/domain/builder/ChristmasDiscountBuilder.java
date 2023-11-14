@@ -1,10 +1,10 @@
 package christmas.domain.builder;
 
 import christmas.domain.Reservation;
-import christmas.domain.constant.DiscountEvent;
+import christmas.domain.constant.DecemberEvent;
 
 public class ChristmasDiscountBuilder extends DiscountBuilder {
-    private static final DiscountEvent CHRISTMAS_D_DAY_EVENT = DiscountEvent.CHRISTMAS_D_DAY;
+    private static final DecemberEvent CHRISTMAS_D_DAY_EVENT = DecemberEvent.CHRISTMAS_D_DAY;
     private static final int CHRISTMAS_DATE = 25;
     private static final int BASE_DISCOUNT_AMOUNT = -900;
     private static final int ADDITIONAL_DISCOUNT_AMOUNT = -100;

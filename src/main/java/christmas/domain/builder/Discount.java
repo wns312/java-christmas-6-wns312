@@ -1,17 +1,17 @@
 package christmas.domain.builder;
 
-import christmas.domain.constant.DiscountEvent;
+import christmas.domain.constant.DecemberEvent;
 import christmas.exception.IllegalArgumentExceptionType;
 
 public class Discount {
     private static final int NO_DISCOUNT = 0;
 
-    private final DiscountEvent discountEvent;
+    private final DecemberEvent decemberEvent;
     private final int discountAmount;
 
-    public Discount(DiscountEvent discountEvent, int discountAmount) {
+    public Discount(DecemberEvent decemberEvent, int discountAmount) {
         validate(discountAmount);
-        this.discountEvent = discountEvent;
+        this.decemberEvent = decemberEvent;
         this.discountAmount = discountAmount;
     }
 
@@ -21,8 +21,8 @@ public class Discount {
         }
     }
 
-    public DiscountEvent getDiscountEvent() {
-        return discountEvent;
+    public DecemberEvent getDiscountEvent() {
+        return decemberEvent;
     }
 
     public int getDiscountAmount() {

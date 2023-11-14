@@ -1,6 +1,6 @@
 package christmas.domain.dto;
 
-import christmas.domain.constant.DiscountEvent;
+import christmas.domain.constant.DecemberEvent;
 
-public record DiscountDto(DiscountEvent discountEvent, int discountAmount) {
+public record DiscountDto(DecemberEvent decemberEvent, int discountAmount) {
 }

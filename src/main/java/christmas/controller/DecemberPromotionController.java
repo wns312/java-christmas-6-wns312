@@ -11,7 +11,7 @@ import christmas.domain.builder.DiscountDirector;
 import christmas.domain.builder.SpecialStarDiscountBuilder;
 import christmas.domain.builder.WeekDayDiscountBuilder;
 import christmas.domain.builder.WeekEndDiscountBuilder;
-import christmas.domain.constant.DecemberEventBadge;
+import christmas.domain.constant.EventBadge;
 import christmas.domain.dto.DiscountDto;
 import christmas.domain.dto.MenuDto;
 import christmas.domain.gift.ChampagneGiftGenerator;
@@ -59,7 +59,7 @@ public class DecemberPromotionController {
     private void printBadges(List<Discount> discounts, List<Menu> gifts) {
         int totalDiscount = discounts.stream().mapToInt(Discount::getDiscountAmount).sum();
         int totalGiftsPrice = gifts.stream().mapToInt(Menu::getTotalPrice).sum();
-        DecemberEventBadge badge = DecemberEventBadge.getBadgeByBenefitAmount(totalGiftsPrice - totalDiscount);
+        EventBadge badge = EventBadge.getBadgeByBenefitAmount(totalGiftsPrice - totalDiscount);
 
         outputView.printBadge(badge);
     }

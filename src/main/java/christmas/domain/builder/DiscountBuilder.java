@@ -1,17 +1,17 @@
 package christmas.domain.builder;
 
 import christmas.domain.Reservation;
-import christmas.domain.constant.DiscountEvent;
+import christmas.domain.constant.DecemberEvent;
 import christmas.exception.IllegalStateExceptionType;
 
 public abstract class DiscountBuilder {
     static final int NO_DISCOUNT = 0;
 
-    final DiscountEvent discountEvent;
+    final DecemberEvent decemberEvent;
     final Reservation reservation;
 
-    public DiscountBuilder(DiscountEvent discountEvent, Reservation reservation) {
-        this.discountEvent = discountEvent;
+    public DiscountBuilder(DecemberEvent decemberEvent, Reservation reservation) {
+        this.decemberEvent = decemberEvent;
         this.reservation = reservation;
     }
 
@@ -21,8 +21,8 @@ public abstract class DiscountBuilder {
         }
     }
 
-    DiscountEvent getDiscountEvent() {
-        return discountEvent;
+    DecemberEvent getDiscountEvent() {
+        return decemberEvent;
     }
 
     int getTotalPayment() {

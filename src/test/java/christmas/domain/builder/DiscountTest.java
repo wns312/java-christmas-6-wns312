@@ -3,7 +3,7 @@ package christmas.domain.builder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.domain.constant.DiscountEvent;
+import christmas.domain.constant.DecemberEvent;
 import christmas.exception.IllegalArgumentExceptionType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,25 +19,25 @@ class DiscountTest {
     @ValueSource(ints = {1, 100, 200, 500, 1000, 2000, 2023, 4000, 4046, 10000, Integer.MAX_VALUE})
 
     void invalidDiscountAmountTest(int discountAmount) {
-        assertThatThrownBy(() -> new Discount(DiscountEvent.SPECIAL, discountAmount))
+        assertThatThrownBy(() -> new Discount(DecemberEvent.SPECIAL, discountAmount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_DISCOUNT.getMessage());
     }
 
     @DisplayName("할인 이벤트 종류 조회")
     @ParameterizedTest
-    @EnumSource(DiscountEvent.class)
-    void getDiscountEventTest(DiscountEvent discountEvent) {
-        Discount discount = new Discount(discountEvent, NO_DISCOUNT);
+    @EnumSource(DecemberEvent.class)
+    void getDiscountEventTest(DecemberEvent decemberEvent) {
+        Discount discount = new Discount(decemberEvent, NO_DISCOUNT);
 
         assertThat(discount.getDiscountEvent())
-                .isEqualTo(discountEvent);
+                .isEqualTo(decemberEvent);
     }
 
     @DisplayName("할인 금액 조회")
     @ParameterizedTest
     @ValueSource(ints = {Integer.MIN_VALUE, -1, -10, -100, -200, -500, -1000, -2000, -2023, -4000, -4046, -10000})    void getDiscountAmountTest(int discountAmount) {
-        Discount discount = new Discount(DiscountEvent.SPECIAL, discountAmount);
+        Discount discount = new Discount(DecemberEvent.SPECIAL, discountAmount);
 
         assertThat(discount.getDiscountAmount())
                 .isEqualTo(discountAmount);
@@ -46,7 +46,7 @@ class DiscountTest {
     @DisplayName("할인 없음 테스트")
     @Test
     void hasDiscountSuccessTest() {
-        Discount discount = new Discount(DiscountEvent.SPECIAL, NO_DISCOUNT);
+        Discount discount = new Discount(DecemberEvent.SPECIAL, NO_DISCOUNT);
 
         assertThat(discount.hasDiscount())
                 .isFalse();
@@ -56,7 +56,7 @@ class DiscountTest {
     @ParameterizedTest
     @ValueSource(ints = {Integer.MIN_VALUE, -1, -10, -100, -200, -500, -1000, -2000, -2023, -4000, -4046, -10000})
     void doesNotHaveDiscountTest(int discountAmount) {
-        Discount discount = new Discount(DiscountEvent.SPECIAL, discountAmount);
+        Discount discount = new Discount(DecemberEvent.SPECIAL, discountAmount);
 
         assertThat(discount.hasDiscount())
                 .isTrue();

@@ -1,6 +1,6 @@
 package christmas.domain.constant;
 
-public enum DiscountEvent {
+public enum DecemberEvent {
     CHRISTMAS_D_DAY("크리스마스 디데이 할인"),
     WEEKDAY("평일 할인"),
     WEEKEND("주말 할인"),
@@ -9,7 +9,7 @@ public enum DiscountEvent {
 
     private final String eventName;
 
-    DiscountEvent(String eventName) {
+    DecemberEvent(String eventName) {
         this.eventName = eventName;
     }
 

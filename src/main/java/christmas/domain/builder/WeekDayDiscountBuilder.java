@@ -2,11 +2,11 @@ package christmas.domain.builder;
 
 import christmas.domain.Menu;
 import christmas.domain.Reservation;
-import christmas.domain.constant.DiscountEvent;
+import christmas.domain.constant.DecemberEvent;
 import java.util.List;
 
 public class WeekDayDiscountBuilder extends DiscountBuilder {
-    private static final DiscountEvent WEEKDAY_EVENT = DiscountEvent.WEEKDAY;
+    private static final DecemberEvent WEEKDAY_EVENT = DecemberEvent.WEEKDAY;
 
     private static final int DISCOUNT_AMOUNT_PER_MENU = -2023;
 
