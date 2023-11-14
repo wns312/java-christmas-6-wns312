@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class OrderMenuTest {
+class MenuTest {
     @DisplayName("메뉴 객체 생성 성공 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1, 5, 10, 20})
