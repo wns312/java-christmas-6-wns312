@@ -1,7 +1,6 @@
 package christmas.domain.builder;
 
-import christmas.domain.OrderMenus;
-import christmas.domain.VisitDate;
+import christmas.domain.Reservation;
 import christmas.domain.constant.DiscountEvent;
 import christmas.exception.IllegalStateExceptionType;
 
@@ -9,13 +8,11 @@ public abstract class DiscountBuilder {
     static final int NO_DISCOUNT = 0;
 
     final DiscountEvent discountEvent;
-    final VisitDate visitDate;
-    final OrderMenus orderMenus;
+    final Reservation reservation;
 
-    public DiscountBuilder(DiscountEvent discountEvent, VisitDate visitDate, OrderMenus orderMenus) {
+    public DiscountBuilder(DiscountEvent discountEvent, Reservation reservation) {
         this.discountEvent = discountEvent;
-        this.visitDate = visitDate;
-        this.orderMenus = orderMenus;
+        this.reservation = reservation;
     }
 
     void validate() {
@@ -29,7 +26,7 @@ public abstract class DiscountBuilder {
     }
 
     int getTotalPayment() {
-        return orderMenus.getTotalPayment();
+        return reservation.getTotalPayment();
     }
 
     int discount() {

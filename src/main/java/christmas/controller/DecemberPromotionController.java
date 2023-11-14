@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Menu;
 import christmas.domain.OrderMenus;
+import christmas.domain.Reservation;
 import christmas.domain.VisitDate;
 import christmas.domain.builder.ChristmasDiscountBuilder;
 import christmas.domain.builder.Discount;
@@ -11,7 +12,6 @@ import christmas.domain.builder.SpecialStarDiscountBuilder;
 import christmas.domain.builder.WeekDayDiscountBuilder;
 import christmas.domain.builder.WeekEndDiscountBuilder;
 import christmas.domain.constant.DecemberEventBadge;
-import christmas.domain.constant.DiscountEvent;
 import christmas.domain.dto.DiscountDto;
 import christmas.domain.dto.MenuDto;
 import christmas.domain.gift.ChampagneGiftGenerator;
@@ -33,22 +33,27 @@ public class DecemberPromotionController {
     }
 
     public void run() {
-        VisitDate visitDate = readVisitDate();
-        OrderMenus orderMenus = readOrderMenus();
+        Reservation reservation = createReservation();
+        printIntroducingBenefitMessage(reservation.getDate());
+        printOrderMenus(reservation.getOrderMenus());
+        printTotalPayment(reservation.getTotalPayment());
 
-        printIntroducingBenefitMessage(visitDate.getLocalDate());
-        printOrderMenus(orderMenus.getElements());
-        printTotalPayment(orderMenus.getTotalPayment());
-
-        DiscountDirector discountDirector = initDiscountDirector(visitDate, orderMenus);
+        DiscountDirector discountDirector = initDiscountDirector(reservation);
         List<Discount> discounts = discountDirector.discountAll();
         List<Menu> gifts = discountDirector.getGifts();
 
         printGifts(gifts);
         printDiscount(discounts);
         printTotalAmountOfDiscountAndGifts(discounts, gifts);
-        printTotalPaymentAfterDiscount(orderMenus, discounts);
+        printTotalPaymentAfterDiscount(reservation, discounts);
         printBadges(discounts, gifts);
+    }
+
+    private Reservation createReservation() {
+        VisitDate visitDate = readVisitDate();
+        OrderMenus orderMenus = readOrderMenus();
+
+        return new Reservation(visitDate, orderMenus);
     }
 
     private void printBadges(List<Discount> discounts, List<Menu> gifts) {
@@ -71,23 +76,23 @@ public class DecemberPromotionController {
     }
 
 
-    private void printTotalPaymentAfterDiscount(OrderMenus orderMenus, List<Discount> discounts) {
+    private void printTotalPaymentAfterDiscount(Reservation reservation, List<Discount> discounts) {
         int totalDiscount = discounts.stream().mapToInt(Discount::getDiscountAmount).sum();
-        outputView.printTotalPaymentAfterDiscount(orderMenus.getTotalPayment() + totalDiscount);
+        outputView.printTotalPaymentAfterDiscount(reservation.getTotalPayment() + totalDiscount);
     }
 
-    private DiscountDirector initDiscountDirector(VisitDate visitDate, OrderMenus orderMenus) {
-        List<DiscountBuilder> discountBuilders = initDiscountBuilders(visitDate, orderMenus);
+    private DiscountDirector initDiscountDirector(Reservation reservation) {
+        List<DiscountBuilder> discountBuilders = initDiscountBuilders(reservation);
 
-        return new DiscountDirector(discountBuilders, new ChampagneGiftGenerator(orderMenus.getTotalPayment()));
+        return new DiscountDirector(discountBuilders, new ChampagneGiftGenerator(reservation.getTotalPayment()));
     }
 
-    private List<DiscountBuilder> initDiscountBuilders(VisitDate visitDate, OrderMenus orderMenus) {
+    private List<DiscountBuilder> initDiscountBuilders(Reservation reservation) {
         return List.of(
-                new ChristmasDiscountBuilder(visitDate, orderMenus),
-                new WeekDayDiscountBuilder(visitDate, orderMenus),
-                new WeekEndDiscountBuilder(visitDate, orderMenus),
-                new SpecialStarDiscountBuilder(visitDate, orderMenus)
+                new ChristmasDiscountBuilder(reservation),
+                new WeekDayDiscountBuilder(reservation),
+                new WeekEndDiscountBuilder(reservation),
+                new SpecialStarDiscountBuilder(reservation)
         );
     }
 

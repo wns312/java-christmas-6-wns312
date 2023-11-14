@@ -1,8 +1,7 @@
 package christmas.domain.builder;
 
 import christmas.domain.Menu;
-import christmas.domain.OrderMenus;
-import christmas.domain.VisitDate;
+import christmas.domain.Reservation;
 import christmas.domain.constant.DiscountEvent;
 import java.util.List;
 
@@ -10,22 +9,22 @@ public class WeekEndDiscountBuilder extends DiscountBuilder {
     private static final DiscountEvent WEEKEND_EVENT = DiscountEvent.WEEKEND;
     private static final int DISCOUNT_AMOUNT_PER_MENU = -2023;
 
-    public WeekEndDiscountBuilder(VisitDate visitDate, OrderMenus orderMenus) {
-        super(WEEKEND_EVENT, visitDate, orderMenus);
+    public WeekEndDiscountBuilder(Reservation reservation) {
+        super(WEEKEND_EVENT, reservation);
     }
 
     @Override
     boolean isAvailableDate() {
-        return visitDate.isWeekEnd();
+        return reservation.isVisitDayWeekEnd();
     }
 
     @Override
     int getDiscount() {
         validate();
 
-        List<Menu> elements = orderMenus.getElements();
+        List<Menu> orderMenus = reservation.getOrderMenus();
 
-        return elements.stream()
+        return orderMenus.stream()
                 .filter(Menu::isMain)
                 .mapToInt(Menu::getCount)
                 .map(count -> count * DISCOUNT_AMOUNT_PER_MENU)

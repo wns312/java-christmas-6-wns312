@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.domain.OrderMenu;
 import christmas.domain.OrderMenus;
+import christmas.domain.Reservation;
 import christmas.domain.VisitDate;
 import christmas.domain.constant.MenuType;
 import christmas.exception.IllegalStateExceptionType;
@@ -28,7 +29,7 @@ class ChristmasDiscountBuilderTest {
                 new OrderMenu(MenuType.RED_WINE, 2)
         ));
 
-        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(visitDate, orderMenus);
+        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(new Reservation(visitDate, orderMenus));
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -49,8 +50,9 @@ class ChristmasDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.RED_WINE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(visitDate, orderMenus);
+        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(reservation);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -73,8 +75,9 @@ class ChristmasDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.RED_WINE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(visitDate, orderMenus);
+        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(reservation);
         assertThatThrownBy(christmasDiscountBuilder::getDiscount)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(IllegalStateExceptionType.CANNOT_GET_DISCOUNT.getMessage());

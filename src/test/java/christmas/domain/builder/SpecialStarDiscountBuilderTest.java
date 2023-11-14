@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.domain.OrderMenu;
 import christmas.domain.OrderMenus;
+import christmas.domain.Reservation;
 import christmas.domain.VisitDate;
 import christmas.domain.constant.MenuType;
 import christmas.exception.IllegalStateExceptionType;
@@ -26,8 +27,9 @@ class SpecialStarDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.RED_WINE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        SpecialStarDiscountBuilder specialStarDiscountBuilder = new SpecialStarDiscountBuilder(visitDate, orderMenus);
+        SpecialStarDiscountBuilder specialStarDiscountBuilder = new SpecialStarDiscountBuilder(reservation);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -48,8 +50,9 @@ class SpecialStarDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.RED_WINE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        SpecialStarDiscountBuilder specialStarDiscountBuilder = new SpecialStarDiscountBuilder(visitDate, orderMenus);
+        SpecialStarDiscountBuilder specialStarDiscountBuilder = new SpecialStarDiscountBuilder(reservation);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -70,8 +73,9 @@ class SpecialStarDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.RED_WINE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        SpecialStarDiscountBuilder specialStarDiscountBuilder = new SpecialStarDiscountBuilder(visitDate, orderMenus);
+        SpecialStarDiscountBuilder specialStarDiscountBuilder = new SpecialStarDiscountBuilder(reservation);
 
         assertThatThrownBy(specialStarDiscountBuilder::getDiscount)
                 .isInstanceOf(IllegalStateException.class)

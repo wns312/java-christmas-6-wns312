@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import christmas.domain.OrderMenu;
 import christmas.domain.OrderMenus;
+import christmas.domain.Reservation;
 import christmas.domain.VisitDate;
 import christmas.domain.constant.MenuType;
 import christmas.exception.IllegalStateExceptionType;
@@ -27,8 +28,9 @@ class WeekEndDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.CHOCOLATE_CAKE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(visitDate, orderMenus);
+        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(reservation);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -49,8 +51,9 @@ class WeekEndDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.CHOCOLATE_CAKE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(visitDate, orderMenus);
+        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(reservation);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -71,8 +74,9 @@ class WeekEndDiscountBuilderTest {
                 new OrderMenu(MenuType.BARBECUED_RIBS, 2),
                 new OrderMenu(MenuType.CHOCOLATE_CAKE, 2)
         ));
+        Reservation reservation = new Reservation(visitDate, orderMenus);
 
-        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(visitDate, orderMenus);
+        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(reservation);
 
         assertThatThrownBy(weekEndDiscountBuilder::getDiscount)
                 .isInstanceOf(IllegalStateException.class)

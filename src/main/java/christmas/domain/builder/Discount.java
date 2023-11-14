@@ -2,7 +2,6 @@ package christmas.domain.builder;
 
 import christmas.domain.constant.DiscountEvent;
 import christmas.exception.IllegalArgumentExceptionType;
-import christmas.exception.IllegalStateExceptionType;
 
 public class Discount {
     private static final int NO_DISCOUNT = 0;

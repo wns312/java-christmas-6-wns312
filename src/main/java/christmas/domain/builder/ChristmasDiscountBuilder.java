@@ -1,7 +1,6 @@
 package christmas.domain.builder;
 
-import christmas.domain.OrderMenus;
-import christmas.domain.VisitDate;
+import christmas.domain.Reservation;
 import christmas.domain.constant.DiscountEvent;
 
 public class ChristmasDiscountBuilder extends DiscountBuilder {
@@ -10,19 +9,19 @@ public class ChristmasDiscountBuilder extends DiscountBuilder {
     private static final int BASE_DISCOUNT_AMOUNT = -900;
     private static final int ADDITIONAL_DISCOUNT_AMOUNT = -100;
 
-    public ChristmasDiscountBuilder(VisitDate visitDate, OrderMenus orderMenus) {
-        super(CHRISTMAS_D_DAY_EVENT, visitDate, orderMenus);
+    public ChristmasDiscountBuilder(Reservation reservation) {
+        super(CHRISTMAS_D_DAY_EVENT, reservation);
     }
 
     @Override
     boolean isAvailableDate() {
-        return visitDate.getDayOfMonth() <= CHRISTMAS_DATE;
+        return reservation.getVisitDayOfMonth() <= CHRISTMAS_DATE;
     }
 
     @Override
     int getDiscount() {
         validate();
 
-        return BASE_DISCOUNT_AMOUNT + (visitDate.getDayOfMonth() * ADDITIONAL_DISCOUNT_AMOUNT);
+        return BASE_DISCOUNT_AMOUNT + (reservation.getVisitDayOfMonth() * ADDITIONAL_DISCOUNT_AMOUNT);
     }
 }
