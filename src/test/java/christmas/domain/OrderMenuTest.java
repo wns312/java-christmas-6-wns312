@@ -11,12 +11,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class MenuTest {
+class OrderMenuTest {
     @DisplayName("메뉴 객체 생성 성공 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1, 5, 10, 20})
     void createOrderMenuSuccessTest(int count) {
-        assertThatCode(() -> new Menu(MenuType.BARBECUED_RIBS, count))
+        assertThatCode(() -> new OrderMenu(MenuType.BARBECUED_RIBS, count))
                 .doesNotThrowAnyException();
     }
 
@@ -24,7 +24,7 @@ class MenuTest {
     @ParameterizedTest
     @ValueSource(ints = {Integer.MIN_VALUE, -1, 0, 21, Integer.MAX_VALUE})
     void createOrderMenuFailTest(int count) {
-        assertThatThrownBy(() -> new Menu(MenuType.BARBECUED_RIBS, count))
+        assertThatThrownBy(() -> new OrderMenu(MenuType.BARBECUED_RIBS, count))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
     }
@@ -35,8 +35,8 @@ class MenuTest {
     @ValueSource(ints = {1, 2, 3, 4, 8, 9, 10, 18, 19, 20})
     void getTotalPaymentTest(int count) {
         MenuType barbecuedRibs = MenuType.BARBECUED_RIBS;
-        Menu menu = new Menu(barbecuedRibs, count);
-        assertThat(menu.getTotalPayment())
+        OrderMenu orderMenu = new OrderMenu(barbecuedRibs, count);
+        assertThat(orderMenu.getTotalPrice())
                 .isEqualTo(barbecuedRibs.getPrice() * count);
 
     }
@@ -47,9 +47,9 @@ class MenuTest {
     @EnumSource(MenuType.class)
     void checkOrderMenusName(MenuType menuType) {
         int count = 1;
-        Menu menu = new Menu(menuType, count);
+        OrderMenu orderMenu = new OrderMenu(menuType, count);
 
-        assertThat(menu.getMenu()).isEqualTo(menuType);
+        assertThat(orderMenu.getMenuType()).isEqualTo(menuType);
     }
 
 }

@@ -1,7 +1,7 @@
 package christmas.domain.validation;
 
 import christmas.domain.Menu;
-import christmas.domain.constant.MenuCategory;
+import christmas.domain.OrderMenu;
 import christmas.domain.constant.MenuType;
 import christmas.exception.IllegalArgumentExceptionType;
 import java.util.HashSet;
@@ -36,7 +36,7 @@ public class OrderMenusValidation {
 
     private static void validateDuplicatedMenu(List<Menu> elements) {
         Set<MenuType> menus = new HashSet<>();
-        elements.forEach((orderMenu) -> menus.add(orderMenu.getMenu()));
+        elements.forEach((orderMenu) -> menus.add(orderMenu.getMenuType()));
 
         if (menus.size() != elements.size()) {
             throw IllegalArgumentExceptionType.INVALID_ORDERING.getException();

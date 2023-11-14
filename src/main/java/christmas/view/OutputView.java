@@ -1,7 +1,8 @@
 package christmas.view;
 
 import christmas.domain.constant.DecemberEventBadge;
-import christmas.domain.dto.EventBenefitDto;
+import christmas.domain.constant.DiscountEvent;
+import christmas.domain.dto.DiscountDto;
 import christmas.domain.dto.MenuDto;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -58,33 +59,34 @@ public class OutputView {
         gifts.forEach(this::printMenu);
     }
 
-    public void printEventBenefit(EventBenefitDto eventBenefit) {
-        System.out.printf(
-                EVENT_BENEFIT_EXPRESSION,
-                eventBenefit.discountEventName(),
-                convertNumberToCostExpression(eventBenefit.discount() * -1)
-        );
+    private void printDiscount(DiscountDto discount) {
+        DiscountEvent discountEvent = discount.discountEvent();
+        String discountAmountExpression = convertNumberToCostExpression(discount.discountAmount());
+
+        System.out.printf(EVENT_BENEFIT_EXPRESSION, discountEvent.getEventName(), discountAmountExpression);
     }
 
-    public void printEventBenefits(List<EventBenefitDto> eventBenefits) {
+    public void printDiscounts(List<DiscountDto> discounts) {
         System.out.println(EVENT_BENEFITS_MESSAGE);
 
-        if (eventBenefits.isEmpty()) {
+        if (discounts.isEmpty()) {
             printNothingToPrintMessage();
             return;
         }
 
-        eventBenefits.forEach(this::printEventBenefit);
+        discounts.forEach(this::printDiscount);
     }
 
-    public void printEventBenefitsAmount(int totalBenefitAmount) {
+    public void printTotalBenefitAmount(int totalBenefitAmount) {
+        String totalBenefitsAmountExpression = convertNumberToCostExpression(totalBenefitAmount);
         System.out.println(EVENT_TOTAL_BENEFIT_AMOUNT_MESSAGE);
-        System.out.printf(COST_EXPRESSION, convertNumberToCostExpression(totalBenefitAmount * -1));
+        System.out.printf(COST_EXPRESSION, totalBenefitsAmountExpression);
     }
 
-    public void printDiscountedTotalPayment(int totalPayment) {
+    public void printTotalPaymentAfterDiscount(int totalPayment) {
+        String discountedTotalPaymentExpression = convertNumberToCostExpression(totalPayment);
         System.out.println(DISCOUNTED_TOTAL_PAYMENT_MESSAGE);
-        System.out.printf(COST_EXPRESSION, convertNumberToCostExpression(totalPayment));
+        System.out.printf(COST_EXPRESSION, discountedTotalPaymentExpression);
     }
 
     public void printBadge(DecemberEventBadge eventBadge) {

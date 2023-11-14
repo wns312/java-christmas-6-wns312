@@ -27,8 +27,8 @@ public enum DecemberEventBadge {
         return Stream.of(values()).filter(decemberEventBadge -> decemberEventBadge.minimumPayment <= payment).toList();
     }
 
-    public static DecemberEventBadge getBadgeByPayment(int payment) {
-        List<DecemberEventBadge> badges = filterBadgesByPayment(payment);
+    public static DecemberEventBadge getBadgeByBenefitAmount(int benefitAmount) {
+        List<DecemberEventBadge> badges = filterBadgesByPayment(benefitAmount);
 
         return Collections.max(badges, Comparator.comparing(decemberEventBadge -> decemberEventBadge.minimumPayment));
     }

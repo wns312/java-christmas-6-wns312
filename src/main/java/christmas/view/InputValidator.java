@@ -27,5 +27,4 @@ public class InputValidator {
             throw IllegalArgumentExceptionType.INVALID_ORDERING.getException();
         }
     }
-
 }

@@ -17,7 +17,6 @@ public class OrderMenus {
     }
 
     public int getTotalPayment() {
-        return elements.stream().mapToInt(Menu::getTotalPayment).sum();
+        return elements.stream().mapToInt(Menu::getTotalPrice).sum();
     }
-
 }

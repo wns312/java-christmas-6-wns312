@@ -18,8 +18,8 @@ class MenusTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void createOrderMenusSuccessTest(int count) {
-        Menu barbecuedRibs = new Menu(MenuType.BARBECUED_RIBS, count);
-        Menu caesarSalad = new Menu(MenuType.CAESAR_SALAD, count);
+        OrderMenu barbecuedRibs = new OrderMenu(MenuType.BARBECUED_RIBS, count);
+        OrderMenu caesarSalad = new OrderMenu(MenuType.CAESAR_SALAD, count);
         assertThatCode(() -> new OrderMenus(List.of(barbecuedRibs, caesarSalad)))
                 .doesNotThrowAnyException();
 
@@ -29,8 +29,8 @@ class MenusTest {
     @ParameterizedTest
     @ValueSource(ints = {11})
     void createOrderMenusFailTest(int count) {
-        Menu barbecuedRibs = new Menu(MenuType.BARBECUED_RIBS, count);
-        Menu caesarSalad = new Menu(MenuType.CAESAR_SALAD, count);
+        OrderMenu barbecuedRibs = new OrderMenu(MenuType.BARBECUED_RIBS, count);
+        OrderMenu caesarSalad = new OrderMenu(MenuType.CAESAR_SALAD, count);
         assertThatThrownBy(() -> new OrderMenus(List.of(barbecuedRibs, caesarSalad)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
@@ -47,9 +47,9 @@ class MenusTest {
         int caesarSaladCount = 5;
         int seafoodPastaCount = 7;
 
-        Menu barbecuedRibsOrder = new Menu(barbecuedRibs, barbecuedRibsCount);
-        Menu caesarSaladOrder = new Menu(caesarSalad, caesarSaladCount);
-        Menu seafoodPastaOrder = new Menu(seafoodPasta, seafoodPastaCount);
+        OrderMenu barbecuedRibsOrder = new OrderMenu(barbecuedRibs, barbecuedRibsCount);
+        OrderMenu caesarSaladOrder = new OrderMenu(caesarSalad, caesarSaladCount);
+        OrderMenu seafoodPastaOrder = new OrderMenu(seafoodPasta, seafoodPastaCount);
         OrderMenus orderMenus = new OrderMenus(List.of(barbecuedRibsOrder, caesarSaladOrder, seafoodPastaOrder));
         assertThat(orderMenus.getTotalPayment())
                 .isEqualTo(
@@ -59,6 +59,4 @@ class MenusTest {
                 );
 
     }
-
-
 }
