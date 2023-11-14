@@ -1,6 +1,8 @@
 package christmas.domain.builder;
 
 import christmas.domain.constant.DiscountEvent;
+import christmas.exception.IllegalArgumentExceptionType;
+import christmas.exception.IllegalStateExceptionType;
 
 public class Discount {
     private static final int NO_DISCOUNT = 0;
@@ -9,8 +11,15 @@ public class Discount {
     private final int discountAmount;
 
     public Discount(DiscountEvent discountEvent, int discountAmount) {
+        validate(discountAmount);
         this.discountEvent = discountEvent;
         this.discountAmount = discountAmount;
+    }
+
+    private void validate(int discountAmount) {
+        if (discountAmount > 0) {
+            throw IllegalArgumentExceptionType.INVALID_DISCOUNT.getException();
+        }
     }
 
     public DiscountEvent getDiscountEvent() {
