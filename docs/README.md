@@ -104,3 +104,72 @@
         - [x] 5천 원 이상: 별
         - [x] 1만 원 이상: 트리
         - [x] 2만 원 이상: 산타
+
+
+---
+# 크리스마스 프로모션
+
+각 패키지는 MVC 패턴에 따라 구성했습니다.
+구성은 다음과 같습니다
+
+![](image.png)
+
+---
+## constant
+| 클래스명          | 타입   | 역할                                         | 비고 |
+|---------------|------|--------------------------------------------|----|
+| DecemberEvent | Enum | 이벤트의 종류와 이름을 표현                            |    |
+| EventBadge    | Enum | 배지의 종류와 가격 기준을 표현                          |    |
+| EventWeek     | Enum | 주중과 주말을 표현하고, DayOfWeek를 주중과 주말에 맞게 변수로 포함 |    |
+| MenuCategory  | Enum | 메뉴의 카테고리 구분                                |    |
+| MenuType      | Enum | 메뉴의 이름, 가격, 카테고리 표현                        |    |
+
+---
+## controller
+| 클래스명                        | 타입    | 역할                            | 인스턴스 변수               |
+|-----------------------------|-------|-------------------------------|-----------------------|
+| DecemberPromotionController | Class | 이벤트 관리의 Domain, View Class 중재 | Inputview, OutputView |
+
+---
+## domain
+### order
+
+| 클래스명        | 타입             | 역할                           | 비고                       |
+|-------------|----------------|------------------------------|--------------------------|
+| VisitDate  | Class          | 방문날짜의 표현과 LocalDate 관련 정보 제공 |                          |
+| Menu        | Abstract Class | 메뉴 정보 표현                     |                          |
+| OrderMenu   | Class          | 주문 메뉴 정보 표현                  | Menu 추상클래스 상속            |
+| OrderMenus  | Class          | 주문 메뉴 정보의 일급 리스트             |                          |
+| Reservation | Class          | 주문 날짜와 주문 메뉴에 대한 정보 표현       | OrderMenus와 VisitDate 포함 |
+### discount
+
+| 클래스명                       | 타입             | 역할                                   | 비고                 |
+|----------------------------|----------------|--------------------------------------|--------------------|
+| Discount                  | Class          | 할인의 종류와 할인 가격 표현                     |                    |
+| Gift                       | Class          | 증정 메뉴의 종류와 개수 표현                     | Menu 추상클래스 상속      |
+| DiscountDirector           | Class          | 할인 로직들의 사용자 클래스로, 할인 로직의 실행 의 진입점    | 템플릿 메소드 사용         |
+| DiscountBuilder            | Abstract Class | DiscountDirector가 실행하는 할인 로직의 추상 클래스 |                    |
+| ChristmasDiscountBuilder   | Class          | 크리스마스 할인 로직                          | DiscountBuilder 상속 |
+| SpecialStarDiscountBuilder | Class          | 특별 할인 로직                             | DiscountBuilder 상속 |
+| WeekDayDiscountBuilder     | Class          | 주중 할인 로직                             | DiscountBuilder 상속 |
+| WeekEndDiscountBuilder     | Class          | 주말 할인 로직                             | DiscountBuilder 상속 |
+| GiftGenerator              | Interface      | 증정 로직의 슈퍼클래스                         |                    |
+| ChampagneGiftGenerator     | Class          | 샴페인 증정 로직                            | GiftGenerator 상속   |
+| DiscountFactory            | Enum           | 할인 로직의 생성을 담당하는 Enum 팩토리 메소드         |                    |
+### result
+| 클래스명        | 타입    | 역할               | 비고                       |
+|-------------|-------|------------------|--------------------------|
+| EventResult | Class | 이벤트 결과에 대한 정보 제공 | Discount 리스트와 Gift리스트 포함 |
+
+---
+## view
+
+| 클래스명       | 타입    | 역할                | 비고 |
+|------------|-------|-------------------|----|
+| Inputview  | Class | 게임 콘솔 화면 입력 스캔 역할 |    |
+| OutputView | Class | 게임 콘솔 화면 출력 역할    |    |
+
+---
+# 고민한 부분
+
+[Velog](https://velog.io/@wns312/4%EC%A3%BC%EC%B0%A8-%ED%94%84%EB%A6%AC%EC%BD%94%EC%8A%A4-%ED%9A%8C%EA%B3%A0)에 회고를 작성했습니다!
