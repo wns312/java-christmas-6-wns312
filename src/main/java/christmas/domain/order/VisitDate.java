@@ -17,29 +17,19 @@ public class VisitDate {
     public VisitDate(int date) {
         validateMinDate(date);
         validateMaxDate(date);
-        this.localDate = createLocaldate(date);
-    }
-
-    public LocalDate getLocalDate() {
-        return localDate;
+        this.localDate = LocalDate.of(TWO_THOUSAND_TWENTY_THREE, DECEMBER, date);
     }
 
     private void validateMinDate(int date) {
         if (date < MIN_DATE) {
             throw IllegalArgumentExceptionType.INVALID_DATE.getException();
         }
-
     }
 
     private void validateMaxDate(int date) {
         if (date > MAX_DATE) {
             throw IllegalArgumentExceptionType.INVALID_DATE.getException();
         }
-
-    }
-
-    private LocalDate createLocaldate(int date) {
-        return LocalDate.of(TWO_THOUSAND_TWENTY_THREE, DECEMBER, date);
     }
 
     public int getDayOfMonth() { return localDate.getDayOfMonth(); }

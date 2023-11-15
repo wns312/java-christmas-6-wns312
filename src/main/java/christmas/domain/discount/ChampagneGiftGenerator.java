@@ -6,6 +6,7 @@ import christmas.exception.IllegalArgumentExceptionType;
 import java.util.List;
 
 public class ChampagneGiftGenerator implements GiftGenerator {
+    private static final List<Menu> EMPTY_GIFT = List.of();
     private static final int NO_PAYMENT = 0;
     private static final int MINIMUM_PAYMENT = 120000;
     private final int totalPayment;
@@ -24,7 +25,7 @@ public class ChampagneGiftGenerator implements GiftGenerator {
     @Override
     public List<Menu> generateGift() {
         if (totalPayment < MINIMUM_PAYMENT) {
-            return List.of();
+            return EMPTY_GIFT;
         }
 
         return List.of(new Gift(MenuType.CHAMPAGNE, 1));

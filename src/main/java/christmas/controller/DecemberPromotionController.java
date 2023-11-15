@@ -61,7 +61,9 @@ public class DecemberPromotionController {
 
     private DiscountDirector initDiscountDirector(Reservation reservation) {
         List<DiscountBuilder> discountBuilders = DiscountFactory.buildAll(reservation);
-        return new DiscountDirector(discountBuilders, new ChampagneGiftGenerator(reservation.getTotalPayment()));
+        ChampagneGiftGenerator champagneGiftGenerator = new ChampagneGiftGenerator(reservation.getTotalPayment());
+
+        return new DiscountDirector(discountBuilders, champagneGiftGenerator);
     }
 
     private void printOrderInformation(Reservation reservation) {

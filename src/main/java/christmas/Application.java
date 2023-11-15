@@ -9,6 +9,7 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         DecemberPromotionController controller = new DecemberPromotionController(inputView, outputView);
+
         controller.run();
     }
 }
