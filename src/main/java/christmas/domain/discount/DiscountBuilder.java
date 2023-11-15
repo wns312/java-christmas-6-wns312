@@ -7,29 +7,23 @@ import christmas.exception.IllegalStateExceptionType;
 public abstract class DiscountBuilder {
     static final int NO_DISCOUNT = 0;
 
-    final DecemberEvent decemberEvent;
-    final Reservation reservation;
+    protected final DecemberEvent decemberEvent;
+    protected final Reservation reservation;
 
     public DiscountBuilder(DecemberEvent decemberEvent, Reservation reservation) {
         this.decemberEvent = decemberEvent;
         this.reservation = reservation;
     }
 
-    void validate() {
-        if (!isAvailableDate()) {
-            throw IllegalStateExceptionType.CANNOT_GET_DISCOUNT.getException();
-        }
-    }
-
-    DecemberEvent getDiscountEvent() {
+    public DecemberEvent getDiscountEvent() {
         return decemberEvent;
     }
 
-    int getTotalPayment() {
+    public int getTotalPayment() {
         return reservation.getTotalPayment();
     }
 
-    int discount() {
+    public int discount() {
         if (isAvailableDate()) {
             return getDiscount();
         }
@@ -37,7 +31,13 @@ public abstract class DiscountBuilder {
         return NO_DISCOUNT;
     }
 
-    abstract boolean isAvailableDate();
+    protected void validate() {
+        if (!isAvailableDate()) {
+            throw IllegalStateExceptionType.CANNOT_GET_DISCOUNT.getException();
+        }
+    }
 
-    abstract int getDiscount();
+    abstract protected boolean isAvailableDate();
+
+    abstract protected int getDiscount();
 }

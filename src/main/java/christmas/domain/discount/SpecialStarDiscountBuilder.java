@@ -12,12 +12,12 @@ public class SpecialStarDiscountBuilder extends DiscountBuilder {
     }
 
     @Override
-    boolean isAvailableDate() {
+    protected boolean isAvailableDate() {
         return reservation.isSunday() || reservation.isChristmas();
     }
 
     @Override
-    int getDiscount() {
+    protected int getDiscount() {
         validate();
 
         return FIX_DISCOUNT_AMOUNT;

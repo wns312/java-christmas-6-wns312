@@ -1,9 +1,7 @@
 package christmas.domain.discount;
 
-import christmas.domain.order.Menu;
 import christmas.domain.order.Reservation;
 import christmas.domain.constant.DecemberEvent;
-import java.util.List;
 
 public class WeekEndDiscountBuilder extends DiscountBuilder {
     private static final DecemberEvent WEEKEND_EVENT = DecemberEvent.WEEKEND;
@@ -14,12 +12,12 @@ public class WeekEndDiscountBuilder extends DiscountBuilder {
     }
 
     @Override
-    boolean isAvailableDate() {
+    protected boolean isAvailableDate() {
         return reservation.isWeekEnd();
     }
 
     @Override
-    int getDiscount() {
+    protected int getDiscount() {
         validate();
 
         return reservation.getMainMenuCount() * DISCOUNT_AMOUNT_PER_MENU;
