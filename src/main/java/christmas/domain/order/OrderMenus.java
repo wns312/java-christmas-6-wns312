@@ -16,6 +16,20 @@ public class OrderMenus {
         return Collections.unmodifiableList(elements);
     }
 
+    public int getDessertMenuCount() {
+        return elements.stream()
+                .filter(Menu::isDessert)
+                .mapToInt(Menu::getCount)
+                .sum();
+    }
+
+    public int getMainMenuCount() {
+        return elements.stream()
+                .filter(Menu::isMain)
+                .mapToInt(Menu::getCount)
+                .sum();
+    }
+
     public int getTotalPayment() {
         return elements.stream().mapToInt(Menu::getTotalPrice).sum();
     }

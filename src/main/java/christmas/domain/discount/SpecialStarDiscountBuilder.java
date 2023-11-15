@@ -13,7 +13,7 @@ public class SpecialStarDiscountBuilder extends DiscountBuilder {
 
     @Override
     boolean isAvailableDate() {
-        return reservation.isVisitDaySunday() || reservation.isVisitDayChristmas();
+        return reservation.isSunday() || reservation.isChristmas();
     }
 
     @Override

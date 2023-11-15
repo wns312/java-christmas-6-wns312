@@ -15,19 +15,13 @@ public class WeekEndDiscountBuilder extends DiscountBuilder {
 
     @Override
     boolean isAvailableDate() {
-        return reservation.isVisitDayWeekEnd();
+        return reservation.isWeekEnd();
     }
 
     @Override
     int getDiscount() {
         validate();
 
-        List<Menu> orderMenus = reservation.getOrderMenus();
-
-        return orderMenus.stream()
-                .filter(Menu::isMain)
-                .mapToInt(Menu::getCount)
-                .map(count -> count * DISCOUNT_AMOUNT_PER_MENU)
-                .sum();
+        return reservation.getMainMenuCount() * DISCOUNT_AMOUNT_PER_MENU;
     }
 }

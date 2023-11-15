@@ -1,6 +1,5 @@
 package christmas.domain.order;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Reservation {
@@ -12,14 +11,6 @@ public class Reservation {
         this.orderMenus = orderMenus;
     }
 
-    public LocalDate getDate() {
-        return visitDate.getLocalDate();
-    }
-
-    public List<Menu> getOrderMenus() {
-        return orderMenus.getElements();
-    }
-
     public int getTotalPayment() {
         return orderMenus.getTotalPayment();
     }
@@ -27,16 +18,24 @@ public class Reservation {
     public int getVisitDayOfMonth() {
         return visitDate.getDayOfMonth();
     }
-    public boolean isVisitDaySunday() {
-        return visitDate.isSunday();
+
+    public List<Menu> getOrderMenus() {
+        return orderMenus.getElements();
     }
-    public boolean isVisitDayChristmas() {
-        return visitDate.isChristmas();
+
+    public int getDessertMenuCount() {
+        return orderMenus.getDessertMenuCount();
     }
-    public boolean isVisitDayWeekDay() {
-        return visitDate.isWeekDay();
+
+    public int getMainMenuCount() {
+        return orderMenus.getMainMenuCount();
     }
-    public boolean isVisitDayWeekEnd() {
-        return visitDate.isWeekEnd();
-    }
+
+    public boolean isSunday() { return visitDate.isSunday(); }
+
+    public boolean isChristmas() { return visitDate.isChristmas(); }
+
+    public boolean isWeekDay() { return visitDate.isWeekDay(); }
+
+    public boolean isWeekEnd() { return visitDate.isWeekEnd(); }
 }
