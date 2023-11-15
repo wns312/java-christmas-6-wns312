@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class VisitDateTest {
-
     @DisplayName("날짜 생성 성공 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 5, 10, 31})

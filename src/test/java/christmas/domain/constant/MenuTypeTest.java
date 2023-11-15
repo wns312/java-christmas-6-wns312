@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class MenuTypeTest {
-
     @DisplayName("메뉴 이름 조회 테스트")
     @ParameterizedTest
     @EnumSource(MenuType.class)

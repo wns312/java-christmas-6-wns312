@@ -2,7 +2,6 @@ package christmas.domain.discount;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.domain.discount.SpecialStarDiscountBuilder;
 import christmas.domain.order.OrderMenu;
 import christmas.domain.order.OrderMenus;
 import christmas.domain.order.Reservation;

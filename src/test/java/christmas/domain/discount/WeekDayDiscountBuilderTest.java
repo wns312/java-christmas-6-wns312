@@ -2,7 +2,6 @@ package christmas.domain.discount;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.domain.discount.WeekDayDiscountBuilder;
 import christmas.domain.order.OrderMenu;
 import christmas.domain.order.OrderMenus;
 import christmas.domain.order.Reservation;
@@ -22,7 +21,6 @@ class WeekDayDiscountBuilderTest {
     @DisplayName("할인 가능 방문 날짜 할인 테스트")
     @ParameterizedTest
     @ValueSource(ints = {3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31})
-
     void checkDiscountableVisitDateTest(int date) {
         VisitDate visitDate = new VisitDate(date);
         OrderMenus orderMenus = new OrderMenus(List.of(

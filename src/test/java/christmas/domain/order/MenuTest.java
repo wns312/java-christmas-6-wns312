@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.domain.constant.MenuType;
-import christmas.domain.order.OrderMenu;
 import christmas.exception.IllegalArgumentExceptionType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -59,5 +58,4 @@ class MenuTest {
                 .isEqualTo(barbecuedRibs.getPrice() * count);
 
     }
-
 }

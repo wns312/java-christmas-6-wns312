@@ -3,7 +3,6 @@ package christmas.domain.discount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.domain.discount.ChampagneGiftGenerator;
 import christmas.domain.order.Menu;
 import christmas.domain.constant.MenuType;
 import christmas.exception.IllegalArgumentExceptionType;

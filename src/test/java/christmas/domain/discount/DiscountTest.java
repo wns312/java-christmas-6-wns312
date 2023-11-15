@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.domain.constant.DecemberEvent;
-import christmas.domain.discount.Discount;
 import christmas.exception.IllegalArgumentExceptionType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ class DiscountTest {
     @DisplayName("비정상 할인 가격 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1, 100, 200, 500, 1000, 2000, 2023, 4000, 4046, 10000, Integer.MAX_VALUE})
-
     void invalidDiscountAmountTest(int discountAmount) {
         assertThatThrownBy(() -> new Discount(DecemberEvent.SPECIAL, discountAmount))
                 .isInstanceOf(IllegalArgumentException.class)

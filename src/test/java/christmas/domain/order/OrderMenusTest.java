@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class OrderMenusTest {
-
     @DisplayName("메뉴 개수 성공 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
@@ -132,6 +131,5 @@ class OrderMenusTest {
                                 + (caesarSalad.getPrice() * caesarSaladCount)
                                 + (seafoodPasta.getPrice() * seafoodPastaCount)
                 );
-
     }
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class EventBadgeTest {
-
     @DisplayName("음수 혜택 금액으로 배지 조회 테스트")
     @ParameterizedTest
     @ValueSource(ints = {Integer.MIN_VALUE, -100000, -10000, -1000, -100, -10, -1})
