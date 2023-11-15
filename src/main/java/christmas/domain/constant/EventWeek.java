@@ -5,8 +5,7 @@ import java.util.List;
 
 public enum EventWeek {
     WEEKDAY(List.of(DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY)),
-    WEEKEND(List.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)),
-    WHOLE_WEEK(List.of(DayOfWeek.values()));
+    WEEKEND(List.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY));
 
     private final List<DayOfWeek> daysOfWeek;
 
