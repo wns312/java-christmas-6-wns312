@@ -18,22 +18,23 @@ class ChristmasDiscountBuilderTest {
     private static final int BASE_DISCOUNT_AMOUNT = -900;
     private static final int ADDITIONAL_DISCOUNT_AMOUNT = -100;
 
+    private ChristmasDiscountBuilder getChristmasDiscountBuilder(VisitDate visitDate) {
+        OrderMenus orderMenus = new OrderMenus(List.of(
+                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
+                new OrderMenu(MenuType.RED_WINE, 2)
+        ));
+        return new ChristmasDiscountBuilder(new Reservation(visitDate, orderMenus));
+    }
+
     @DisplayName("할인 가능 방문 날짜 할인 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25})
     void checkDiscountableVisitDateTest(int date) {
         VisitDate visitDate = new VisitDate(date);
-        OrderMenus orderMenus = new OrderMenus(List.of(
-                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
-                new OrderMenu(MenuType.RED_WINE, 2)
-        ));
-
-        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(new Reservation(visitDate, orderMenus));
+        ChristmasDiscountBuilder christmasDiscountBuilder = getChristmasDiscountBuilder(visitDate);
 
         SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(christmasDiscountBuilder.isAvailableDate())
-                .isTrue();
+        softAssertions.assertThat(christmasDiscountBuilder.isAvailableDate()).isTrue();
         softAssertions.assertThat(christmasDiscountBuilder.discount())
                 .isEqualTo(BASE_DISCOUNT_AMOUNT + (date * ADDITIONAL_DISCOUNT_AMOUNT));
 
@@ -45,21 +46,11 @@ class ChristmasDiscountBuilderTest {
     @ValueSource(ints = {26, 27, 28, 29, 30, 31})
     void checkNonDiscountableVisitDateTest(int date) {
         VisitDate visitDate = new VisitDate(date);
-        OrderMenus orderMenus = new OrderMenus(List.of(
-                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
-                new OrderMenu(MenuType.RED_WINE, 2)
-        ));
-        Reservation reservation = new Reservation(visitDate, orderMenus);
-
-        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(reservation);
+        ChristmasDiscountBuilder christmasDiscountBuilder = getChristmasDiscountBuilder(visitDate);
 
         SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(christmasDiscountBuilder.isAvailableDate())
-                .isFalse();
-
-        softAssertions.assertThat(christmasDiscountBuilder.discount())
-                .isEqualTo(0);
+        softAssertions.assertThat(christmasDiscountBuilder.isAvailableDate()).isFalse();
+        softAssertions.assertThat(christmasDiscountBuilder.discount()).isEqualTo(0);
 
         softAssertions.assertAll();
     }
@@ -70,13 +61,8 @@ class ChristmasDiscountBuilderTest {
     @ValueSource(ints = {26, 27, 28, 29, 30, 31})
     void invalidGettingDiscountCall(int date) {
         VisitDate visitDate = new VisitDate(date);
-        OrderMenus orderMenus = new OrderMenus(List.of(
-                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
-                new OrderMenu(MenuType.RED_WINE, 2)
-        ));
-        Reservation reservation = new Reservation(visitDate, orderMenus);
+        ChristmasDiscountBuilder christmasDiscountBuilder = getChristmasDiscountBuilder(visitDate);
 
-        ChristmasDiscountBuilder christmasDiscountBuilder = new ChristmasDiscountBuilder(reservation);
         assertThatThrownBy(christmasDiscountBuilder::getDiscount)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(IllegalStateExceptionType.CANNOT_GET_DISCOUNT.getMessage());

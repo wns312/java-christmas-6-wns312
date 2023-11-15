@@ -45,15 +45,17 @@ class ChampagneGiftGeneratorTest {
 
         softAssertions.assertThat(menus.isEmpty()).isFalse();
         softAssertions.assertThat(menus.size()).isOne();
-        menus.forEach(menu -> {
-            MenuType menuType = menu.getMenuType();
-            int count = menu.getCount();
-            int totalPrice = menu.getTotalPrice();
-            softAssertions.assertThat(menuType).isEqualTo(MenuType.CHAMPAGNE);
-            softAssertions.assertThat(count).isOne();
-            softAssertions.assertThat(totalPrice).isEqualTo(MenuType.CHAMPAGNE.getPrice());
-        });
-
+        menus.forEach(menu -> testEachMenu(softAssertions, menu));
         softAssertions.assertAll();
+    }
+
+    void testEachMenu(SoftAssertions softAssertions, Menu menu) {
+        MenuType menuType = menu.getMenuType();
+        int count = menu.getCount();
+        int totalPrice = menu.getTotalPrice();
+
+        softAssertions.assertThat(menuType).isEqualTo(MenuType.CHAMPAGNE);
+        softAssertions.assertThat(count).isOne();
+        softAssertions.assertThat(totalPrice).isEqualTo(MenuType.CHAMPAGNE.getPrice());
     }
 }

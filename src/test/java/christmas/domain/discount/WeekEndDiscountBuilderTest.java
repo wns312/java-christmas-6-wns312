@@ -18,25 +18,25 @@ class WeekEndDiscountBuilderTest {
     private static final int DISCOUNT_AMOUNT_PER_MENU = -2023;
     private static final int NO_DISCOUNT = 0;
 
+    private WeekEndDiscountBuilder createWeekEndDiscountBuilder(VisitDate visitDate) {
+        OrderMenus orderMenus = new OrderMenus(List.of(
+                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
+                new OrderMenu(MenuType.CHOCOLATE_CAKE, 2)
+        ));
+
+        return new WeekEndDiscountBuilder(new Reservation(visitDate, orderMenus));
+    }
+
     @DisplayName("할인 가능 방문 날짜 할인 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 8, 9, 15, 16, 22, 23, 29, 30})
     void checkDiscountableVisitDateTest(int date) {
         VisitDate visitDate = new VisitDate(date);
-        OrderMenus orderMenus = new OrderMenus(List.of(
-                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
-                new OrderMenu(MenuType.CHOCOLATE_CAKE, 2)
-        ));
-        Reservation reservation = new Reservation(visitDate, orderMenus);
-
-        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(reservation);
+        WeekEndDiscountBuilder weekEndDiscountBuilder = createWeekEndDiscountBuilder(visitDate);
 
         SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(weekEndDiscountBuilder.isAvailableDate())
-                .isTrue();
-        softAssertions.assertThat(weekEndDiscountBuilder.discount())
-                .isEqualTo(DISCOUNT_AMOUNT_PER_MENU * 2);
+        softAssertions.assertThat(weekEndDiscountBuilder.isAvailableDate()).isTrue();
+        softAssertions.assertThat(weekEndDiscountBuilder.discount()).isEqualTo(DISCOUNT_AMOUNT_PER_MENU * 2);
 
         softAssertions.assertAll();
     }
@@ -46,20 +46,11 @@ class WeekEndDiscountBuilderTest {
     @ValueSource(ints = {3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31})
     void checkNonDiscountableVisitDateTest(int date) {
         VisitDate visitDate = new VisitDate(date);
-        OrderMenus orderMenus = new OrderMenus(List.of(
-                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
-                new OrderMenu(MenuType.CHOCOLATE_CAKE, 2)
-        ));
-        Reservation reservation = new Reservation(visitDate, orderMenus);
-
-        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(reservation);
+        WeekEndDiscountBuilder weekEndDiscountBuilder = createWeekEndDiscountBuilder(visitDate);
 
         SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(weekEndDiscountBuilder.isAvailableDate())
-                .isFalse();
-        softAssertions.assertThat(weekEndDiscountBuilder.discount())
-                .isEqualTo(NO_DISCOUNT);
+        softAssertions.assertThat(weekEndDiscountBuilder.isAvailableDate()).isFalse();
+        softAssertions.assertThat(weekEndDiscountBuilder.discount()).isEqualTo(NO_DISCOUNT);
 
         softAssertions.assertAll();
     }
@@ -69,13 +60,7 @@ class WeekEndDiscountBuilderTest {
     @ValueSource(ints = {3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31})
     void invalidGettingDiscountCall(int date) {
         VisitDate visitDate = new VisitDate(date);
-        OrderMenus orderMenus = new OrderMenus(List.of(
-                new OrderMenu(MenuType.BARBECUED_RIBS, 2),
-                new OrderMenu(MenuType.CHOCOLATE_CAKE, 2)
-        ));
-        Reservation reservation = new Reservation(visitDate, orderMenus);
-
-        WeekEndDiscountBuilder weekEndDiscountBuilder = new WeekEndDiscountBuilder(reservation);
+        WeekEndDiscountBuilder weekEndDiscountBuilder = createWeekEndDiscountBuilder(visitDate);
 
         assertThatThrownBy(weekEndDiscountBuilder::getDiscount)
                 .isInstanceOf(IllegalStateException.class)

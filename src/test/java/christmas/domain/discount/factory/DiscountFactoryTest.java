@@ -27,11 +27,7 @@ class DiscountFactoryTest {
 
         List<DiscountBuilder> discountBuilders = DiscountFactory.buildAll(reservation);
 
-        assertThat(discountBuilders).hasExactlyElementsOfTypes(
-                ChristmasDiscountBuilder.class,
-                SpecialStarDiscountBuilder.class,
-                WeekDayDiscountBuilder.class,
-                WeekEndDiscountBuilder.class
-        );
+        assertThat(discountBuilders).hasExactlyElementsOfTypes(ChristmasDiscountBuilder.class,
+                SpecialStarDiscountBuilder.class, WeekDayDiscountBuilder.class, WeekEndDiscountBuilder.class);
     }
 }
