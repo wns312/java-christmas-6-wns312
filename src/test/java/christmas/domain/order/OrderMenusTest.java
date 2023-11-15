@@ -5,10 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.domain.constant.MenuType;
-import christmas.domain.order.OrderMenu;
-import christmas.domain.order.OrderMenus;
 import christmas.exception.IllegalArgumentExceptionType;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +24,6 @@ class OrderMenusTest {
         OrderMenu caesarSalad = new OrderMenu(MenuType.CAESAR_SALAD, count);
         assertThatCode(() -> new OrderMenus(List.of(barbecuedRibs, caesarSalad)))
                 .doesNotThrowAnyException();
-
     }
 
     @DisplayName("메뉴 최소 개수 실패 테스트")
@@ -34,7 +32,6 @@ class OrderMenusTest {
         assertThatThrownBy(() -> new OrderMenus(List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
-
     }
 
     @DisplayName("메뉴 최대 개수 실패 테스트")
@@ -46,7 +43,6 @@ class OrderMenusTest {
         assertThatThrownBy(() -> new OrderMenus(List.of(barbecuedRibs, caesarSalad)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
-
     }
 
     @DisplayName("중복 메뉴 실패 테스트")
@@ -57,7 +53,6 @@ class OrderMenusTest {
         assertThatThrownBy(() -> new OrderMenus(List.of(barbecuedRibs, barbecuedRibs)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
-
     }
 
     @DisplayName("음료 메뉴만 있는 주문 실패 테스트")
@@ -70,7 +65,51 @@ class OrderMenusTest {
         assertThatThrownBy(() -> new OrderMenus(List.of(beverage)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(IllegalArgumentExceptionType.INVALID_ORDERING.getMessage());
+    }
 
+    @DisplayName("디저트 메뉴 개수 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4})
+    void countDessertMenuCountTest(int count) {
+        List<Menu> dessertMenus = List.of(
+                new OrderMenu(MenuType.CHOCOLATE_CAKE, count),
+                new OrderMenu(MenuType.ICE_CREAM, count)
+        );
+
+        List<Menu> nonDessertMenus = List.of(
+                new OrderMenu(MenuType.BARBECUED_RIBS, count),
+                new OrderMenu(MenuType.WHITE_MUSHROOM_SOUP, count),
+                new OrderMenu(MenuType.CHAMPAGNE, count)
+        );
+        List<Menu> totalMenus = Stream.concat(dessertMenus.stream(), nonDessertMenus.stream()).toList();
+
+        OrderMenus orderMenus = new OrderMenus(totalMenus);
+
+        assertThat(orderMenus.getDessertMenuCount())
+                .isEqualTo(count * dessertMenus.size());
+    }
+
+    @DisplayName("메인 메뉴 개수 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void countMainMenuCountTest(int count) {
+        List<Menu> mainMenus = List.of(
+                new OrderMenu(MenuType.T_BONE_STEAK, count),
+                new OrderMenu(MenuType.BARBECUED_RIBS, count),
+                new OrderMenu(MenuType.SEAFOOD_PASTA, count)
+        );
+
+        List<Menu> nonMainMenus = List.of(
+                new OrderMenu(MenuType.WHITE_MUSHROOM_SOUP, count),
+                new OrderMenu(MenuType.CHOCOLATE_CAKE, count),
+                new OrderMenu(MenuType.CHAMPAGNE, count)
+        );
+        List<Menu> totalMenus = Stream.concat(mainMenus.stream(), nonMainMenus.stream()).toList();
+
+        OrderMenus orderMenus = new OrderMenus(totalMenus);
+
+        assertThat(orderMenus.getMainMenuCount())
+                .isEqualTo(count * mainMenus.size());
     }
 
     @DisplayName("메뉴 가격 합 메소드 테스트")
